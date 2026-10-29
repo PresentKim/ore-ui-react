@@ -1,0 +1,54 @@
+/* Values table for the Ore UI keybinds.
+   Found in C:\XboxGames\Minecraft for Windows\Content\data\gui\dist\hbui\index-*.css: no key binding rules were
+   located; the look reuses the dropdown trigger theme.
+   Estimates: row min height 3.2rem with 0.4rem spacing, label fills the row, slot width 12rem, slot background
+     #1e1e1f, border 0.2rem solid #48494a, hover border #b1b2b5, listening border #ffffff with text #8c8d90,
+     placeholder color #8c8d90, text #ffffff, disabled opacity 0.5. */
+.oui-keybinds {
+  display: block;
+  font-family: var(--oui-font, sans-serif);
+  color: #ffffff;
+}
+
+.oui-keybind {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  min-height: 3.2rem;
+  margin-bottom: 0.4rem;
+}
+
+.oui-keybind-label {
+  flex: 1 1 auto;
+  padding-right: 1.2rem;
+}
+
+.oui-keybind-slot {
+  flex: 0 0 auto;
+  box-sizing: border-box;
+  width: 12rem;
+  min-height: 3.2rem;
+  padding: 0.6rem 1.2rem 0.6rem 1.2rem;
+  text-align: center;
+  background-color: #1e1e1f;
+  border-style: solid;
+  border-width: 0.2rem;
+  border-color: #48494a;
+}
+
+.oui-keybind-slot:hover {
+  border-color: #b1b2b5;
+}
+
+.oui-keybind.listening .oui-keybind-slot {
+  border-color: #ffffff;
+}
+
+.oui-keybind-placeholder,
+.oui-keybind-listening {
+  color: #8c8d90;
+}
+
+.oui-keybind.disabled {
+  opacity: 0.5;
+}
