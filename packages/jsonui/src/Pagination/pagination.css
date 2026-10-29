@@ -1,0 +1,72 @@
+/* Values table for the JSON UI pagination.
+   Found in D:\project\minecraft-bedrock\bedrock-samples\resource_pack (colors reused from the dropdown trigger,
+     textures/ui/button_borderless_light.png): face #c6c6c6, top and left edge #f7f7f7, bottom and right edge #656465,
+     label color #4d4d4d.
+   Found in D:\project\minecraft-bedrock\SkyGear\assets\resourcepack\oreui\hbui\oui-mc.css .mc-pager: button 3.6rem
+     square, arrow image 2.4rem, disabled opacity 0.4.
+   Estimates (not measured): gap 0.4rem, current page face #8b8b8b with inverted edges, text 1.4rem, arrow drawn with
+     a 0.8rem rotated border in #4d4d4d instead of the arrow texture. */
+.jui-pagination {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-family: var(--oui-font, sans-serif);
+  font-size: 1.4rem;
+  color: #4d4d4d;
+}
+
+.jui-pagination-page,
+.jui-pagination-prev,
+.jui-pagination-next {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: 3.6rem;
+  height: 3.6rem;
+  margin-right: 0.4rem;
+  background-color: #c6c6c6;
+  border-style: solid;
+  border-width: 0.2rem;
+  border-top-color: #f7f7f7;
+  border-left-color: #f7f7f7;
+  border-bottom-color: #656465;
+  border-right-color: #656465;
+}
+
+.jui-pagination-next {
+  margin-right: 0;
+}
+
+.jui-pagination-page.on {
+  background-color: #8b8b8b;
+  border-top-color: #656465;
+  border-left-color: #656465;
+  border-bottom-color: #f7f7f7;
+  border-right-color: #f7f7f7;
+}
+
+.jui-pagination-arrow {
+  box-sizing: border-box;
+  width: 0.8rem;
+  height: 0.8rem;
+  border-style: solid;
+  border-width: 0.3rem 0 0 0.3rem;
+  border-color: #4d4d4d;
+}
+
+.jui-pagination-prev .jui-pagination-arrow {
+  margin-left: 0.3rem;
+  transform: rotate(-45deg);
+}
+
+.jui-pagination-next .jui-pagination-arrow {
+  margin-right: 0.3rem;
+  transform: rotate(135deg);
+}
+
+.jui-pagination-prev.disabled,
+.jui-pagination-next.disabled {
+  opacity: 0.4;
+}

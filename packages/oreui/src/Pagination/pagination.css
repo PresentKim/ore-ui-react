@@ -1,0 +1,75 @@
+/* Values table for the Ore UI pagination.
+   Found in C:\XboxGames\Minecraft for Windows\Content\data\gui\dist\hbui\index-aa96eedc6c94fe36a35b.css: no pager or
+   pagination rules exist; the look reuses the dropdown and switch theme.
+   Estimates (not measured): cell size 3.2rem square, gap 0.4rem, background #1e1e1f, border 0.2rem solid #48494a,
+     hover border #b1b2b5, current page background #3c8527 with border #ffffff, text #ffffff at 1.4rem, arrow 0.8rem
+     square rotated border 0.2rem #ffffff, disabled arrow opacity 0.4. */
+.oui-pagination {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-family: var(--oui-font, sans-serif);
+  font-size: 1.4rem;
+  color: #ffffff;
+}
+
+.oui-pagination-page,
+.oui-pagination-prev,
+.oui-pagination-next {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: 3.2rem;
+  height: 3.2rem;
+  margin-right: 0.4rem;
+  background-color: #1e1e1f;
+  border-style: solid;
+  border-width: 0.2rem;
+  border-color: #48494a;
+}
+
+.oui-pagination-next {
+  margin-right: 0;
+}
+
+.oui-pagination-page:hover,
+.oui-pagination-prev:hover,
+.oui-pagination-next:hover {
+  border-color: #b1b2b5;
+}
+
+.oui-pagination-page.on {
+  background-color: #3c8527;
+  border-color: #ffffff;
+}
+
+.oui-pagination-arrow {
+  box-sizing: border-box;
+  width: 0.8rem;
+  height: 0.8rem;
+  border-style: solid;
+  border-width: 0.2rem 0 0 0.2rem;
+  border-color: #ffffff;
+}
+
+.oui-pagination-prev .oui-pagination-arrow {
+  margin-left: 0.3rem;
+  transform: rotate(-45deg);
+}
+
+.oui-pagination-next .oui-pagination-arrow {
+  margin-right: 0.3rem;
+  transform: rotate(135deg);
+}
+
+.oui-pagination-prev.disabled,
+.oui-pagination-next.disabled {
+  opacity: 0.4;
+}
+
+.oui-pagination-prev.disabled:hover,
+.oui-pagination-next.disabled:hover {
+  border-color: #48494a;
+}
