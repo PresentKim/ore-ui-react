@@ -1,7 +1,11 @@
 /* Values table for the JSON UI tabs.
-   Estimates (not read from bedrock-samples; follows the vanilla button bevel from the jsonui button):
+   Measured from SkyGear assets/resourcepack/oreui/hbui/oui-mc.css (.mc-tab, vanilla TabTopBack and TabTopFront, 12x11 slice 4):
+     link minimum height 4.4rem, minimum width 4.8rem, active link reaches 0.4rem below the row (margin-bottom -0.4rem).
+   Estimates (not read from bedrock-samples; follows the vanilla button bevel from the jsonui button; flat colors stand in
+   for the tab textures):
      inactive link face #757575 with top and left edge #f7f7f7 and bottom and right edge #656465, active link face #c6c6c6,
-     link padding 0.6rem 1.4rem, font size 1.4rem, text #4d4d4d inactive and #ffffff active, disabled opacity 0.5. */
+     bevel width 0.2rem, link padding 0.6rem 1.4rem, font size 1.4rem, text #4d4d4d inactive and #ffffff active,
+     disabled opacity 0.5, panel padding 1rem 0 0 0, panel text #ffffff. */
 .jui-tabs {
   display: flex;
   flex-direction: column;
@@ -13,6 +17,8 @@
   align-items: center;
   justify-content: center;
   box-sizing: border-box;
+  min-width: 4.8rem;
+  min-height: 4.4rem;
   padding: 0.6rem 1.4rem 0.6rem 1.4rem;
   border-style: solid;
   border-width: 0.2rem;
@@ -27,6 +33,7 @@
 }
 
 .jui-tablink.active {
+  margin-bottom: -0.4rem;
   background-color: #c6c6c6;
   color: #ffffff;
 }

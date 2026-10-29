@@ -1,4 +1,4 @@
-import { useFacetState } from '@react-facet/core'
+import { useFacetCallback, useFacetState } from '@react-facet/core'
 import type { ProgressProps } from '@ore-ui-react/core/src/progress'
 import { Button as OreButton } from '@ore-ui-react/oreui/src/Button/Button'
 import { ProgressBar as OreBar, ProgressCircle as OreCircle } from '@ore-ui-react/oreui/src/Progress/Progress'
@@ -14,7 +14,7 @@ type Skin = {
 
 const ProgressDemo = ({ skin: { Button, ProgressBar, ProgressCircle } }: { skin: Skin }) => {
   const [value, setValue] = useFacetState(30)
-  const step = () => setValue(((value.get() as number) + 20) % 120)
+  const step = useFacetCallback((current: number) => () => setValue((current + 20) % 120), [setValue], [value])
 
   return (
     <div style={{ width: '20rem', maxWidth: '100%' }}>
@@ -34,10 +34,11 @@ const demos: Record<string, Demo> = {
     oreui: () => <ProgressDemo skin={{ Button: OreButton, ProgressBar: OreBar, ProgressCircle: OreCircle }} />,
     jsonui: () => <ProgressDemo skin={{ Button: JsonButton, ProgressBar: JsonBar, ProgressCircle: JsonCircle }} />,
     code: `const [value, setValue] = useFacetState(30)
+const advance = useFacetCallback((current: number) => () => setValue((current + 20) % 120), [setValue], [value])
 
 <ProgressBar value={value} />
 <ProgressCircle value={value} />
-<Button onPress={() => setValue((value.get() + 20) % 120)}>Advance</Button>`,
+<Button onPress={advance}>Advance</Button>`,
   },
 }
 

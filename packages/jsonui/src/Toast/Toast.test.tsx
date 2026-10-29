@@ -65,6 +65,15 @@ describe('ToastHost', () => {
     expect(container.textContent).toContain('three')
   })
 
+  it('shows nothing when maxVisible is 0', () => {
+    const toasts = createToasts()
+    const { container } = render(<ToastHost toasts={toasts} maxVisible={0} />)
+    act(() => {
+      toasts.show({ text: 'one' })
+    })
+    expect(items(container)).toHaveLength(0)
+  })
+
   it('dismisses on left mousedown', () => {
     const toasts = createToasts()
     const { container } = render(<ToastHost toasts={toasts} />)

@@ -21,7 +21,7 @@ const ToastItem = ({ item, toasts }: { item: Facet<Toast>; toasts: Toasts }) => 
 }
 
 export const ToastHost = ({ toasts, position = 'top-right', maxVisible = 3 }: ToastHostProps) => {
-  const visible = useFacetMap((list) => list.slice(-maxVisible), [maxVisible], [toasts.items])
+  const visible = useFacetMap((list) => list.slice(Math.max(0, list.length - maxVisible)), [maxVisible], [toasts.items])
 
   return (
     <fast-div className={`jui-toast-host ${position}`}>
