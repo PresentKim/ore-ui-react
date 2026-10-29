@@ -1,10 +1,13 @@
 import { describe, expect, it } from 'vitest'
 import { CATALOG } from './catalog'
 import type { CatalogEntry } from './catalog'
+import { DEMOS } from './demos/index'
+
+const all = CATALOG.reduce<CatalogEntry[]>((acc, c) => acc.concat(c.entries), [])
 
 describe('CATALOG', () => {
   it('lists categories in order', () => {
-    expect(CATALOG.map((c) => c.id)).toEqual(['basic', 'complex', 'feedback', 'layout', 'media'])
+    expect(CATALOG.map((c) => c.id)).toEqual(['basic', 'complex', 'feedback', 'layout', 'media', 'minecraft'])
   })
 
   it('lists Gameface entries', () => {
@@ -23,18 +26,29 @@ describe('CATALOG', () => {
     expect(names('media')).toEqual(['Image', 'LiveView', 'MaskImage'])
   })
 
-  it('builds the first entry', () => {
-    expect(CATALOG[0].entries[0]).toEqual({
+  it('builds a Gameface entry', () => {
+    expect(CATALOG[0].entries[0]).toMatchObject({
       id: 'accordion',
       name: 'Accordion',
       source: 'https://github.com/CoherentLabs/Gameface-UI/tree/main/src/components/Basic/Accordion',
-      status: 'planned',
     })
   })
 
-  it('marks exactly four entries ready', () => {
-    const all = CATALOG.reduce<CatalogEntry[]>((acc, c) => acc.concat(c.entries), [])
-    const ready = all.filter((e) => e.status === 'ready')
-    expect(ready.map((e) => e.id).sort()).toEqual(['button', 'checkbox', 'slider', 'togglebutton'])
+  it('ready_has_demo', () => {
+    for (const entry of all) {
+      expect(entry.status).toBe(entry.id in DEMOS ? 'ready' : 'planned')
+    }
+    expect(Object.keys(DEMOS).filter((id) => !all.some((e) => e.id === id))).toEqual([])
+  })
+
+  it('keeps liveview planned', () => {
+    expect(all.find((e) => e.id === 'liveview')!.status).toBe('planned')
+  })
+
+  it('sizedbox_listed', () => {
+    const category = CATALOG.find((c) => c.title === 'Minecraft')!
+    expect(category.entries).toHaveLength(1)
+    expect(category.entries[0]).toMatchObject({ id: 'sizedbox', name: 'SizedBox', status: 'ready' })
+    expect(category.entries[0].source).toBeUndefined()
   })
 })

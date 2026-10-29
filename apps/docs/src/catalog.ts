@@ -1,4 +1,5 @@
 import type { ReactElement } from 'react'
+import { DEMOS } from './demos/index'
 
 export type Demo = {
   oreui: () => ReactElement
@@ -9,7 +10,7 @@ export type Demo = {
 export type CatalogEntry = {
   id: string
   name: string
-  source: string
+  source?: string
   status: 'ready' | 'planned'
 }
 
@@ -18,8 +19,6 @@ export type CatalogCategory = {
   title: string
   entries: CatalogEntry[]
 }
-
-const READY = ['button', 'checkbox', 'slider', 'togglebutton']
 
 const NAMES: Record<string, string[]> = {
   Basic: [
@@ -67,6 +66,7 @@ const NAMES: Record<string, string[]> = {
     'Transform',
   ],
   Media: ['Image', 'LiveView', 'MaskImage'],
+  Minecraft: ['SizedBox'],
 }
 
 const SOURCE_ROOT = 'https://github.com/CoherentLabs/Gameface-UI/tree/main/src/components'
@@ -79,8 +79,8 @@ export const CATALOG: CatalogCategory[] = Object.keys(NAMES).map((title) => ({
     return {
       id,
       name,
-      source: `${SOURCE_ROOT}/${title}/${name}`,
-      status: READY.includes(id) ? 'ready' : 'planned',
+      source: title === 'Minecraft' ? undefined : `${SOURCE_ROOT}/${title}/${name}`,
+      status: id in DEMOS ? 'ready' : 'planned',
     }
   }),
 }))

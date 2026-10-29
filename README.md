@@ -2,14 +2,40 @@
 
 A react-facet component library with two skins: the Mojang Ore UI look and the vanilla JSON UI look. Both skins render the same props, so a screen can switch skins without changing its logic. A Vite docs app walks the [Gameface UI component catalog](https://gameface-ui.coherent-labs.com/components/) and draws each ready component in both skins side by side.
 
-Ready components: Button, Checkbox, ToggleButton, Slider. The rest of the catalog is listed as planned in the docs app.
+An entry in the docs app is ready exactly when it has a demo. The remaining entries are listed as planned.
 
 ## Packages
 
-- `@ore-ui-react/core`: shared prop types, `usePress`, and slider range math.
+- `@ore-ui-react/core`: shared prop types, `usePress`, slider range math, and the pure helpers behind each component.
 - `@ore-ui-react/oreui`: components with the Ore UI look (class prefix `oui-`).
 - `@ore-ui-react/jsonui`: components with the vanilla JSON UI look (class prefix `jui-`).
+- `@ore-ui-react/primitives`: layout boxes and helpers with no skin.
 - `@ore-ui-react/docs`: the docs app (`apps/docs`).
+
+## Components
+
+Core exports the props and helpers for each component below. Both skins export the same components.
+
+- oreui and jsonui: Accordion, AccordionItem, BarChart, LineChart, Button, Carousel, Checkbox, ColorPicker, Dropdown, TextInput, PasswordInput, NumberInput, Keybinds, Keybind, Modal, Pagination, ProgressBar, ProgressCircle, RadialMenu, Radio, RadioGroup, RoundedButton, Scroll, Segment, SegmentButton, Slider, Stepper, Tabs, TabLink, Tab, TextBlock, InlineTextBlock, TextSlider, ToastHost, ToggleButton, Tooltip, Tutorial, TwoHandleSlider, XYSlider.
+- primitives: SizedBox, Block, Flex, Row, Column, Grid, GridTile, Layout, Top, Content, Bottom, Absolute, Relative, Transform, Layout3D, List, ListItem, State, Match, Image, MaskImage, and the `guiSize`, `sizeClassOf` and `useSizeClass` helpers.
+
+Not implemented: LiveView, pie and donut charts (charts are bar and line only), and gamepad keybinds (Keybinds handles keyboard and mouse).
+
+## SizedBox
+
+`SizedBox` is a div with a size in GUI pixels (1 GUI px is 0.2rem) that never grows past `96vw` by `96vh`. Strings pass through as CSS lengths. Screen-sized boxes use `vw` and `vh`, never percent.
+
+```tsx
+import { SizedBox, useSizeClass } from '@ore-ui-react/primitives'
+
+const sizeClass = useSizeClass()
+
+<SizedBox width={326} height={166}>window</SizedBox>
+<SizedBox width="50vw" maxWidth="20rem">capped</SizedBox>
+<SizedBox fixed width={80}>no shrink</SizedBox>
+```
+
+`fixed` sets `flex-shrink: 0`, because Gameface ignores `min-width: 0`. `useSizeClass` returns a facet of `'s'`, `'m'` or `'l'` (under 64rem, under 100rem, and wider), computed from `innerWidth / rem` because Gameface has no `@media`.
 
 ## Install
 

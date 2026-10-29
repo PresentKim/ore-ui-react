@@ -31,7 +31,7 @@ const findRoute = (catalog: CatalogCategory[], hash: string) => {
 const Planned = ({ entry }: { entry: CatalogEntry }) => (
   <div className="docs-planned">
     <span className="docs-badge">Planned</span>
-    <a href={entry.source}>{entry.source}</a>
+    {entry.source && <a href={entry.source}>{entry.source}</a>}
   </div>
 )
 
@@ -48,7 +48,7 @@ const Showcase = ({ entry, demo }: { entry: CatalogEntry; demo: Demo }) => (
       </section>
     </div>
     <pre className="docs-code">{demo.code}</pre>
-    <a href={entry.source}>{entry.source}</a>
+    {entry.source && <a href={entry.source}>{entry.source}</a>}
   </div>
 )
 

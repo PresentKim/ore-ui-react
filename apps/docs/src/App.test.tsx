@@ -46,6 +46,14 @@ describe('App', () => {
     expect(link).toBeTruthy()
   })
 
+  it('renders an entry without a source link', () => {
+    window.location.hash = '#/minecraft/sizedbox'
+    const sized = { sizedbox: demos.button }
+    const { container } = render(<App catalog={CATALOG} demos={sized} />)
+    expect(container.querySelector('pre')).toBeTruthy()
+    expect(container.querySelector('main a')).toBeNull()
+  })
+
   it('shows the index for an unknown hash', () => {
     window.location.hash = '#/nope'
     const { container } = render(<App catalog={CATALOG} demos={demos} />)
