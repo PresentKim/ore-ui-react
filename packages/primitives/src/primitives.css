@@ -1,0 +1,10 @@
+/*
+  Values from SkyGear oui-mc.css (.mc-window, .mc-split-right) and common/ui/oreui.go:
+  1 GUI px = 0.2rem; window 326x166 GUI px = 65.2rem x 33.2rem.
+  max-width 96vw and max-height 96vh cap a window; flex-shrink 0 keeps fixed panels
+  (Gameface ignores min-width: 0); screen-sized boxes use vw/vh, never percent.
+*/
+.ou-sized {
+  position: relative;
+  box-sizing: border-box;
+}
