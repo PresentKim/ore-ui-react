@@ -1,0 +1,38 @@
+/* Values table for the JSON UI radial menu.
+   Reused from the JSON UI slider (packages/jsonui/src/Slider/slider.css): face #404040 with border 0.2rem #000000,
+     active face #c6c6c6 with border #ffffff, disabled opacity 0.5.
+   Estimates (no radial menu exists in the pack): menu size 24rem x 24rem, orbit radius 8.5rem,
+     dead zone radius 4rem, item size 6rem x 3rem, label color #ffffff (#131313 when active). */
+.jui-radialmenu {
+  position: relative;
+  box-sizing: border-box;
+  border-radius: 50%;
+  background-color: #404040;
+}
+
+.jui-radialmenu-item {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 6rem;
+  height: 3rem;
+  margin-left: -3rem;
+  margin-top: -1.5rem;
+  box-sizing: border-box;
+  border-style: solid;
+  border-width: 0.2rem;
+  border-color: #000000;
+  color: #ffffff;
+  pointer-events: none;
+}
+
+.jui-radialmenu-item.active {
+  border-color: #ffffff;
+  background-color: #c6c6c6;
+  color: #131313;
+}
+
+.jui-radialmenu.disabled {
+  opacity: 0.5;
+}

@@ -1,0 +1,37 @@
+/* Values table for the Ore UI radial menu.
+   Reused from the Ore UI slider (packages/oreui/src/Slider/slider.css): face #1e1e1f with border 0.2rem #1e1e1f,
+     active face #d0d1d4, disabled opacity 0.5.
+   Estimates (no radial menu exists in the bundle): menu size 24rem x 24rem, orbit radius 8.5rem,
+     dead zone radius 4rem, item size 6rem x 3rem, label color #ffffff (#1e1e1f when active). */
+.oui-radialmenu {
+  position: relative;
+  box-sizing: border-box;
+  border-radius: 50%;
+  background-color: #1e1e1f;
+}
+
+.oui-radialmenu-item {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 6rem;
+  height: 3rem;
+  margin-left: -3rem;
+  margin-top: -1.5rem;
+  box-sizing: border-box;
+  border-style: solid;
+  border-width: 0.2rem;
+  border-color: #1e1e1f;
+  color: #ffffff;
+  pointer-events: none;
+}
+
+.oui-radialmenu-item.active {
+  background-color: #d0d1d4;
+  color: #1e1e1f;
+}
+
+.oui-radialmenu.disabled {
+  opacity: 0.5;
+}
