@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, it } from 'vitest'
+import { afterEach, describe, expect, it, vi } from 'vitest'
 import { Facet } from '@react-facet/core'
 import { act, render } from '@react-facet/dom-fiber-testing-library'
 import { SizedBox } from './SizedBox'
@@ -20,10 +20,14 @@ describe('SizedBox', () => {
     expect(box.style.height).toBe('33.2rem')
   })
 
-  it('caps to 96vw and 96vh by default', () => {
+  it('caps to 96vw and 96vh from the stylesheet, not inline', async () => {
     const box = boxOf(render(<SizedBox />))
-    expect(box.style.maxWidth).toBe('96vw')
-    expect(box.style.maxHeight).toBe('96vh')
+    expect(box.className).toBe('ou-sized')
+    expect(box.style.maxWidth).toBe('')
+    expect(box.style.maxHeight).toBe('')
+    const fs = await vi.importActual<{ readFileSync: (path: string, encoding: string) => string }>('node:fs')
+    const css = fs.readFileSync('packages/primitives/src/primitives.css', 'utf8')
+    expect(css).toMatch(/\.ou-sized \{[^}]*max-width: 96vw;[^}]*max-height: 96vh;/)
   })
 
   it('takes explicit caps', () => {

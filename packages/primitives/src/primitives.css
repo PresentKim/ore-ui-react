@@ -3,8 +3,12 @@
   1 GUI px = 0.2rem; window 326x166 GUI px = 65.2rem x 33.2rem.
   max-width 96vw and max-height 96vh cap a window; flex-shrink 0 keeps fixed panels
   (Gameface ignores min-width: 0); screen-sized boxes use vw/vh, never percent.
+  The default caps live here, not in an inline style: Gameface on 1.26.60 collapses a box whose inline
+  style sets vw/vh sizes, while the same units in a stylesheet rule work.
 */
 .ou-sized {
   position: relative;
   box-sizing: border-box;
+  max-width: 96vw;
+  max-height: 96vh;
 }

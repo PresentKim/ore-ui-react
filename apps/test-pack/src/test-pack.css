@@ -16,6 +16,8 @@
 }
 
 .tp-window {
+  width: 94vw;
+  height: 88vh;
   display: flex;
   flex-direction: row;
   overflow: hidden;

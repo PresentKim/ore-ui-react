@@ -40,7 +40,7 @@ export const TestScreen = () => {
     <div className="tp-root">
       {shown && (
         <div className="tp-overlay">
-          <SizedBox className="tp-window" width="94vw" height="88vh" fixed>
+          <SizedBox className="tp-window" fixed>
             <div className="tp-sidebar">
               <div className="tp-title">ore-ui-react</div>
               <OreScroll>

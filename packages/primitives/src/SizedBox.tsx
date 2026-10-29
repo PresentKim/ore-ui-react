@@ -13,17 +13,10 @@ export type SizedBoxProps = {
   children?: ReactNode
 }
 
-export const SizedBox = ({
-  width,
-  height,
-  maxWidth = '96vw',
-  maxHeight = '96vh',
-  fixed,
-  className,
-  style,
-  children,
-}: SizedBoxProps) => {
-  const size: CSSProperties = { maxWidth, maxHeight }
+export const SizedBox = ({ width, height, maxWidth, maxHeight, fixed, className, style, children }: SizedBoxProps) => {
+  const size: CSSProperties = {}
+  if (maxWidth !== undefined) size.maxWidth = maxWidth
+  if (maxHeight !== undefined) size.maxHeight = maxHeight
   if (width !== undefined) size.width = guiSize(width)
   if (height !== undefined) size.height = guiSize(height)
   if (fixed) size.flexShrink = 0

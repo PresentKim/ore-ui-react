@@ -23,7 +23,7 @@ Not implemented: LiveView, pie and donut charts (charts are bar and line only), 
 
 ## SizedBox
 
-`SizedBox` is a div with a size in GUI pixels (1 GUI px is 0.2rem) that never grows past `96vw` by `96vh`. Strings pass through as CSS lengths. Screen-sized boxes use `vw` and `vh`, never percent.
+`SizedBox` is a div with a size in GUI pixels (1 GUI px is 0.2rem) that never grows past `96vw` by `96vh`. Strings pass through as CSS lengths. Screen-sized boxes use `vw` and `vh`, never percent, and set them in a CSS class: in game, Gameface collapses a box whose inline style has `vw` or `vh` sizes, so the default caps come from the `ou-sized` rule.
 
 ```tsx
 import { SizedBox, useSizeClass } from '@ore-ui-react/primitives'
@@ -31,8 +31,9 @@ import { SizedBox, useSizeClass } from '@ore-ui-react/primitives'
 const sizeClass = useSizeClass()
 
 <SizedBox width={326} height={166}>window</SizedBox>
-<SizedBox width="50vw" maxWidth="20rem">capped</SizedBox>
+<SizedBox width={300} maxWidth="20rem">capped</SizedBox>
 <SizedBox fixed width={80}>no shrink</SizedBox>
+<SizedBox className="screen-box">sized by a .screen-box rule with vw and vh</SizedBox>
 ```
 
 `fixed` sets `flex-shrink: 0`, because Gameface ignores `min-width: 0`. `useSizeClass` returns a facet of `'s'`, `'m'` or `'l'` (under 64rem, under 100rem, and wider), computed from `innerWidth / rem` because Gameface has no `@media`.

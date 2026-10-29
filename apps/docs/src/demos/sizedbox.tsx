@@ -10,8 +10,8 @@ const SizedBoxDemo = () => (
       100 x 30 GUI px
     </SizedBox>
     <div style={{ height: '0.5rem' }} />
-    <SizedBox width="50vw" height={30} maxWidth="20rem" style={tile}>
-      width 50vw, capped at 20rem
+    <SizedBox width={300} height={30} maxWidth="20rem" style={tile}>
+      300 GUI px wide, capped at 20rem
     </SizedBox>
     <div style={{ height: '0.5rem' }} />
     <Row style={{ width: '24rem' }}>
@@ -32,7 +32,8 @@ const demos: Record<string, Demo> = {
     code: `import { SizedBox } from '@ore-ui-react/primitives'
 
 <SizedBox width={326} height={166}>window</SizedBox>
-<SizedBox width="50vw" maxWidth="20rem">capped</SizedBox>
+<SizedBox width={300} maxWidth="20rem">capped</SizedBox>
+<SizedBox className="screen-box">vw/vh sizes go in a CSS class</SizedBox>
 <SizedBox fixed width={80}>no shrink</SizedBox>`,
   },
 }
