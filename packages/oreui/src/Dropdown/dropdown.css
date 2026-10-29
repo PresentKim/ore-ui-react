@@ -1,0 +1,94 @@
+/* Values table for the Ore UI dropdown.
+   Found in C:\XboxGames\Minecraft for Windows\Content\data\gui\dist\hbui\index-*.css: no dedicated dropdown rules were
+   located; the look reuses the checkbox box theme (neutral50 border, hover border lighter).
+   Estimates (colors from the vanilla switch theme in ore-ui-loading/samples/oui-react/src/switch.css):
+     trigger min height 3.2rem, padding 0 1.2rem, background #1e1e1f, border 0.2rem solid #48494a, hover border #b1b2b5,
+     open border #ffffff, chevron 0.8rem square rotated border, list background #313233 with border 0.2rem #48494a,
+     option padding 0.8rem 1.2rem, option hover #3c3d3e, selected option #3c8527, text #ffffff, disabled option
+     color #8c8d90, disabled dropdown opacity 0.5, list max height 24rem with vertical scroll. */
+.oui-dropdown {
+  position: relative;
+  display: block;
+  min-width: 16rem;
+  font-family: var(--oui-font, sans-serif);
+  color: #ffffff;
+}
+
+.oui-dropdown-trigger {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  box-sizing: border-box;
+  min-height: 3.2rem;
+  padding: 0 1.2rem 0 1.2rem;
+  background-color: #1e1e1f;
+  border-style: solid;
+  border-width: 0.2rem;
+  border-color: #48494a;
+}
+
+.oui-dropdown:hover .oui-dropdown-trigger {
+  border-color: #b1b2b5;
+}
+
+.oui-dropdown.open .oui-dropdown-trigger {
+  border-color: #ffffff;
+}
+
+.oui-dropdown-current {
+  flex: 1 1 auto;
+}
+
+.oui-dropdown-placeholder {
+  color: #8c8d90;
+}
+
+.oui-dropdown-chevron {
+  flex: 0 0 auto;
+  box-sizing: border-box;
+  width: 0.8rem;
+  height: 0.8rem;
+  margin-left: 1.2rem;
+  margin-bottom: 0.4rem;
+  border-style: solid;
+  border-width: 0 0.2rem 0.2rem 0;
+  border-color: #ffffff;
+  transform: rotate(45deg);
+}
+
+.oui-dropdown-list {
+  position: absolute;
+  left: 0;
+  top: 100%;
+  z-index: 10;
+  box-sizing: border-box;
+  width: 100%;
+  max-height: 24rem;
+  overflow-y: auto;
+  background-color: #313233;
+  border-style: solid;
+  border-width: 0.2rem;
+  border-color: #48494a;
+}
+
+.oui-dropdown-option {
+  padding: 0.8rem 1.2rem 0.8rem 1.2rem;
+}
+
+.oui-dropdown-option:hover {
+  background-color: #3c3d3e;
+}
+
+.oui-dropdown-option.on {
+  background-color: #3c8527;
+}
+
+.oui-dropdown-option.disabled,
+.oui-dropdown-option.disabled:hover {
+  background-color: transparent;
+  color: #8c8d90;
+}
+
+.oui-dropdown.disabled {
+  opacity: 0.5;
+}
