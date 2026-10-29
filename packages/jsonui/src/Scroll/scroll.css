@@ -1,0 +1,55 @@
+/* Values table for the JSON UI scrollbar.
+   Measured from D:\project\minecraft-bedrock\bedrock-samples\resource_pack:
+     textures/ui/ScrollRail.png (1x1): #434343.
+     textures/ui/ScrollHandle.png (3x5, nineslice 1 2 1 2): outline #131311, face top #ffffff, middle #c6c6c6, bottom #717171.
+     ui/ui_common.json scrollbar_box_image: handle 5 gui px wide; SkyGear oui-mc.css .mc-scroll-wrap: bar 4 gui px
+     with 2 gui px beside it, rail 3 gui px, handle 5 gui px, border widths 2 and 1 gui px (top, left).
+   Estimates: handle minimum height 5 gui px, content right padding 8 gui px. */
+.jui-scroll {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  flex-shrink: 1;
+  overflow: hidden;
+}
+
+.jui-scroll-content {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  flex-shrink: 1;
+  overflow-y: scroll;
+  padding-right: 1.6rem;
+}
+
+.jui-scroll-bar {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0.4rem;
+  width: 0.8rem;
+  display: none;
+}
+
+.jui-scroll-rail {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0.1rem;
+  width: 0.6rem;
+  background-color: #434343;
+}
+
+.jui-scroll-handle {
+  position: absolute;
+  left: -0.1rem;
+  width: 1rem;
+  min-height: 1rem;
+  box-sizing: border-box;
+  border-style: solid;
+  border-width: 0.2rem 0.2rem 0.2rem 0.2rem;
+  border-color: #131311;
+  background-color: #c6c6c6;
+  border-top-color: #131311;
+}

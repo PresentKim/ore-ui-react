@@ -1,0 +1,54 @@
+/* Values table for the Ore UI scrollbar.
+   Measured from C:\XboxGames\Minecraft for Windows\Content\data\gui\dist\hbui\index-*.css: the scroll containers only set
+   flex-direction column with overflow-y scroll (and a row variant with overflow-x scroll and width 100%); the bundle has no
+   scrollbar rules, so the engine draws no bar.
+   Estimates (colors from the dark panel tokens of the checkbox):
+     bar width 0.8rem on the right edge, track #1e1e1f, handle #b1b2b5 and #ffffff on hover, handle minimum height 1rem,
+     content right padding 1.6rem. */
+.oui-scroll {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  flex-shrink: 1;
+  overflow: hidden;
+}
+
+.oui-scroll-content {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  flex-shrink: 1;
+  overflow-y: scroll;
+  padding-right: 1.6rem;
+}
+
+.oui-scroll-bar {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0.4rem;
+  width: 0.8rem;
+  display: none;
+}
+
+.oui-scroll-track {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 0.8rem;
+  background-color: #1e1e1f;
+}
+
+.oui-scroll-handle {
+  position: absolute;
+  left: 0;
+  width: 0.8rem;
+  min-height: 1rem;
+  background-color: #b1b2b5;
+}
+
+.oui-scroll-handle:hover {
+  background-color: #ffffff;
+}
