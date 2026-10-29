@@ -1,0 +1,128 @@
+/* Values table for the JSON UI inputs.
+   Found in D:\project\minecraft-bedrock\bedrock-samples\resource_pack\ui:
+     ui_common.json text_edit_box_label: text color $text_box_text_color 1.0 (#ffffff), locked alpha 0.5, font size normal,
+       left aligned; edit_box_indent textures for the box background; label padding 3 gui px horizontal, 2 vertical
+       (settings text box viewport 100% - 6px by 100% - 4px).
+     ui/_global_variables.json: text_box_text_color #ffffff, place_holder_text_color 0.851 (#d9d9d9).
+     textures/ui/button_borderless_light.png bevel: top and left #f7f7f7, bottom and right #656465 (reused for the
+       step buttons).
+   Estimates (not in those files): 1 gui px = 0.2rem, box min height 20 gui px, box background #000000 with a 0.2rem
+     inset border (top and left #373737, bottom and right #ffffff), field padding
+     0 0.6rem, font size 1.4rem, step button face #c6c6c6 with label #4d4d4d, password toggle 2.4rem wide,
+     disabled opacity 0.5. */
+.jui-input {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  box-sizing: border-box;
+  min-height: 4rem;
+  background-color: #000000;
+  border-style: solid;
+  border-width: 0.2rem;
+  border-top-color: #373737;
+  border-left-color: #373737;
+  border-bottom-color: #ffffff;
+  border-right-color: #ffffff;
+  font-family: var(--oui-font, sans-serif);
+  font-size: 1.4rem;
+}
+
+.jui-input:focus-within {
+  border-top-color: #ffffff;
+  border-left-color: #ffffff;
+  border-bottom-color: #ffffff;
+  border-right-color: #ffffff;
+}
+
+.jui-input-field {
+  flex: 1 1 0;
+  box-sizing: border-box;
+  min-width: 8rem;
+  padding: 0 0.6rem 0 0.6rem;
+  background-color: transparent;
+  border-style: none;
+  color: #ffffff;
+  font-family: var(--oui-font, sans-serif);
+  font-size: 1.4rem;
+  outline: none;
+}
+
+.jui-input-field::placeholder {
+  color: #d9d9d9;
+}
+
+.jui-input-step {
+  position: relative;
+  flex: 0 0 auto;
+  box-sizing: border-box;
+  width: 3.6rem;
+  background-color: #c6c6c6;
+  border-style: solid;
+  border-width: 0.2rem;
+  border-top-color: #f7f7f7;
+  border-left-color: #f7f7f7;
+  border-bottom-color: #656465;
+  border-right-color: #656465;
+}
+
+.jui-input-step::before {
+  content: '';
+  position: absolute;
+  left: 0.9rem;
+  top: 1.5rem;
+  width: 1.2rem;
+  height: 0.2rem;
+  background-color: #4d4d4d;
+}
+
+.jui-input-increase::after {
+  content: '';
+  position: absolute;
+  left: 1.4rem;
+  top: 1rem;
+  width: 0.2rem;
+  height: 1.2rem;
+  background-color: #4d4d4d;
+}
+
+.jui-input-step:hover {
+  background-color: #218306;
+  border-top-color: #17cd07;
+  border-left-color: #17cd07;
+  border-bottom-color: #004e00;
+  border-right-color: #004e00;
+}
+
+.jui-input-step:hover::before,
+.jui-input-step:hover::after {
+  background-color: #ffffff;
+}
+
+.jui-input-toggle {
+  position: relative;
+  flex: 0 0 auto;
+  width: 2.4rem;
+  margin-right: 0.6rem;
+}
+
+.jui-input-toggle::before {
+  content: '';
+  position: absolute;
+  left: 0.4rem;
+  top: 1.2rem;
+  box-sizing: border-box;
+  width: 1.6rem;
+  height: 1.2rem;
+  border-style: solid;
+  border-width: 0.2rem;
+  border-color: #d9d9d9;
+}
+
+.jui-input-toggle.on::before {
+  border-color: #17cd07;
+  background-color: #218306;
+}
+
+.jui-input.disabled {
+  opacity: 0.5;
+}

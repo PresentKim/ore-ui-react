@@ -1,0 +1,110 @@
+/* Values table for the Ore UI inputs.
+   Found in C:\XboxGames\Minecraft for Windows\Content\data\gui\dist\hbui\index-*.css (text field and its button):
+     field is a transparent borderless native input, flex 1 1 0, min height and paddings from the baseTextField* custom
+     properties, border image per state (default, hovered, focused, disabled), disabled color baseTextFieldDisabledColor,
+     placeholder color baseTextFieldPlaceholderColor, step button row height 4.8rem with a 0.4rem top highlight.
+   Estimates (the baseTextField* values are theme tokens outside the stylesheet; colors borrowed from the vanilla switch
+   theme in ore-ui-loading/samples/oui-react/src/switch.css):
+     root min height 4.8rem, background #1e1e1f, border 0.2rem solid #48494a, hover border #b1b2b5, focus border #ffffff,
+     field padding 0 1.2rem, text #ffffff, placeholder #8c8d90, font size 1.4rem, step buttons 4.8rem wide with
+     #313233 background and a white 1.2rem plus or minus glyph, password toggle 2.4rem wide with a ring glyph,
+     disabled opacity 0.5. */
+.oui-input {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  box-sizing: border-box;
+  min-height: 4.8rem;
+  background-color: #1e1e1f;
+  border-style: solid;
+  border-width: 0.2rem;
+  border-color: #48494a;
+  font-family: var(--oui-font, sans-serif);
+  font-size: 1.4rem;
+}
+
+.oui-input:hover {
+  border-color: #b1b2b5;
+}
+
+.oui-input:focus-within {
+  border-color: #ffffff;
+}
+
+.oui-input-field {
+  flex: 1 1 0;
+  box-sizing: border-box;
+  min-width: 8rem;
+  padding: 0 1.2rem 0 1.2rem;
+  background-color: transparent;
+  border-style: none;
+  color: #ffffff;
+  font-family: var(--oui-font, sans-serif);
+  font-size: 1.4rem;
+  outline: none;
+}
+
+.oui-input-field::placeholder {
+  color: #8c8d90;
+}
+
+.oui-input-step {
+  position: relative;
+  flex: 0 0 auto;
+  width: 4.8rem;
+  background-color: #313233;
+}
+
+.oui-input-step::before {
+  content: '';
+  position: absolute;
+  left: 1.8rem;
+  top: 2.2rem;
+  width: 1.2rem;
+  height: 0.2rem;
+  background-color: #ffffff;
+}
+
+.oui-input-increase::after {
+  content: '';
+  position: absolute;
+  left: 2.3rem;
+  top: 1.7rem;
+  width: 0.2rem;
+  height: 1.2rem;
+  background-color: #ffffff;
+}
+
+.oui-input-step:hover {
+  background-color: #3c3d3e;
+}
+
+.oui-input-toggle {
+  position: relative;
+  flex: 0 0 auto;
+  width: 2.4rem;
+  margin-right: 1.2rem;
+}
+
+.oui-input-toggle::before {
+  content: '';
+  position: absolute;
+  left: 0.4rem;
+  top: 1.6rem;
+  box-sizing: border-box;
+  width: 1.6rem;
+  height: 1.2rem;
+  border-style: solid;
+  border-width: 0.2rem;
+  border-color: #8c8d90;
+  border-radius: 0.6rem;
+}
+
+.oui-input-toggle.on::before {
+  border-color: #3c8527;
+  background-color: #3c8527;
+}
+
+.oui-input.disabled {
+  opacity: 0.5;
+}
