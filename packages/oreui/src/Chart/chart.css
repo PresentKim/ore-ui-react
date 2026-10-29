@@ -1,0 +1,47 @@
+/* Values table for the Ore UI chart.
+   Found in C:\XboxGames\Minecraft for Windows\Content\data\gui\dist\hbui\index-aa96eedc6c94fe36a35b.css: no chart
+   rules exist; colors are reused from the slider table (../Slider/slider.css).
+   Estimates (not measured): plot background #1e1e1f with border 0.2rem #48494a, bar and line color #3c8527,
+     negative bar #b3312d, baseline 0.2rem #b1b2b5, line width 0.3rem, point 0.8rem square #d0d1d4. */
+.oui-chart {
+  position: relative;
+  box-sizing: border-box;
+  background-color: #1e1e1f;
+  border-style: solid;
+  border-width: 0.2rem;
+  border-color: #48494a;
+}
+
+.oui-chart-baseline {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 0.2rem;
+  background-color: #b1b2b5;
+}
+
+.oui-chart-bar {
+  position: absolute;
+  background-color: #3c8527;
+}
+
+.oui-chart-bar.negative {
+  background-color: #b3312d;
+}
+
+.oui-chart-segment {
+  position: absolute;
+  height: 0.3rem;
+  margin-top: -0.15rem;
+  background-color: #3c8527;
+  transform-origin: 0 50%;
+}
+
+.oui-chart-point {
+  position: absolute;
+  width: 0.8rem;
+  height: 0.8rem;
+  margin-left: -0.4rem;
+  margin-top: -0.4rem;
+  background-color: #d0d1d4;
+}
