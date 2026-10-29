@@ -1,6 +1,7 @@
 import { useCallback, useRef } from 'react'
 import { useFacetCallback, useFacetMap, useFacetState, useFacetWrap } from '@react-facet/core'
 import type { FacetProp } from '@ore-ui-react/core'
+import { isPrimaryPress } from '@ore-ui-react/core/src/pointer'
 import { clampNumber, stepNumber, useNativeInput } from '@ore-ui-react/core/src/input'
 import type { NumberInputProps, PasswordInputProps, TextInputProps } from '@ore-ui-react/core/src/input'
 import './input.css'
@@ -41,7 +42,7 @@ export const PasswordInput = ({ value, placeholder, maxLength, disabled, readOnl
   )
   const toggle = useFacetCallback(
     (isVisible: boolean, isDisabled: boolean) => (event: MouseEvent) => {
-      if (isDisabled || event.button !== 0) return
+      if (isDisabled || !isPrimaryPress(event)) return
       setVisible(!isVisible)
     },
     [setVisible],
@@ -92,7 +93,7 @@ export const NumberInput = ({
     useFacetCallback(
       ({ current, locked }: { current: number; locked: boolean }) =>
         (event: MouseEvent) => {
-          if (locked || event.button !== 0) return
+          if (locked || !isPrimaryPress(event)) return
           onChange?.(stepNumber(current, direction * step, min, max))
         },
       [direction, step, min, max, onChange],

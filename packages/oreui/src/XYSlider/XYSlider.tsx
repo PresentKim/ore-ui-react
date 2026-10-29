@@ -1,5 +1,7 @@
 import { useEffect, useRef } from 'react'
 import { useFacetCallback, useFacetEffect, useFacetMap, useFacetWrap } from '@react-facet/core'
+import { isMouseFromTouch, isPrimaryPress, pointOf, trackDrag } from '@ore-ui-react/core/src/pointer'
+import type { PointerPoint, PressEvent } from '@ore-ui-react/core/src/pointer'
 import { xyFromPointer, xyRatios } from '@ore-ui-react/core/src/xyslider'
 import type { XYSliderProps } from '@ore-ui-react/core/src/xyslider'
 import './xyslider.css'
@@ -37,27 +39,21 @@ export const XYSlider = ({
     [valueFacet],
   )
 
-  const onMouseDown = useFacetCallback(
-    (isDisabled: boolean) => (event: MouseEvent) => {
+  const onPress = useFacetCallback(
+    (isDisabled: boolean) => (event: PressEvent) => {
       const area = areaRef.current
-      if (isDisabled || event.button !== 0 || !area) return
+      if (isDisabled || !isPrimaryPress(event) || isMouseFromTouch(event) || !area) return
       detachRef.current?.()
 
-      const report = (clientX: number, clientY: number) => {
+      const report = ({ clientX, clientY }: PointerPoint) => {
         const rect = area.getBoundingClientRect()
         onChange?.(xyFromPointer(clientX, clientY, rect, { minX, maxX, minY, maxY, step }))
       }
-      const onMove = (moveEvent: MouseEvent) => report(moveEvent.clientX, moveEvent.clientY)
-      const detach = () => {
-        document.removeEventListener('mousemove', onMove)
-        document.removeEventListener('mouseup', detach)
-        detachRef.current = null
-      }
 
-      document.addEventListener('mousemove', onMove)
-      document.addEventListener('mouseup', detach)
-      detachRef.current = detach
-      report(event.clientX, event.clientY)
+      detachRef.current = trackDrag(report, () => {
+        detachRef.current = null
+      })
+      report(pointOf(event))
     },
     [onChange, minX, maxX, minY, maxY, step],
     [disabledFacet],
@@ -72,7 +68,7 @@ export const XYSlider = ({
   )
 
   return (
-    <fast-div className={rootClass} onMouseDown={onMouseDown}>
+    <fast-div className={rootClass} onMouseDown={onPress} onTouchStart={onPress}>
       <fast-div ref={areaRef} className="oui-xyslider-area">
         <fast-div className="oui-xyslider-handle" style={{ left, top }} />
       </fast-div>

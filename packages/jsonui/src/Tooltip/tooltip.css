@@ -2,7 +2,8 @@
    Estimates (not read from bedrock-samples; the vanilla hover text box is a dark purple panel, values taken from the
    SkyGear tooltip in SkyGear/assets/resourcepack/oreui/hbui/oui-ddui.css):
      background rgba(16, 0, 16, 0.94), border 0.2rem solid rgb(80, 0, 160), padding 0.7rem, max width 50rem,
-     font size 1.4rem, color #ffffff, no pointer events, placed with position fixed from core placeTooltip. */
+     font size 1.4rem, color #ffffff, no pointer events, drawn in the core #ou-layer with position absolute from core
+     placeTooltip (flipped and clamped 6px inside the screen). */
 .jui-tooltip {
   position: relative;
   display: flex;
@@ -11,7 +12,7 @@
 }
 
 .jui-tooltip-tip {
-  position: fixed;
+  position: absolute;
   z-index: 1000;
   display: flex;
   flex-direction: column;

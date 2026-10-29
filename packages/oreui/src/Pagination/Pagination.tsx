@@ -1,5 +1,6 @@
 import { useFacetCallback, useFacetMap, useFacetWrap } from '@react-facet/core'
 import { pageWindow, stepPage, type PaginationProps } from '@ore-ui-react/core/src/pagination'
+import { isPrimaryPress } from '@ore-ui-react/core/src/pointer'
 import './pagination.css'
 
 type PageFacet = ReturnType<typeof useFacetWrap<number>>
@@ -56,7 +57,7 @@ const Step = ({ direction, pageCount, loop, page, disabled, onChange }: StepProp
   )
   const press = useFacetCallback(
     (current: number, isDisabled: number) => (event: MouseEvent) => {
-      if (isDisabled || event.button !== 0) return
+      if (isDisabled || !isPrimaryPress(event)) return
       const target = stepPage(current, pageCount, direction, loop)
       if (target !== undefined) onChange?.(target)
     },
@@ -93,7 +94,7 @@ const Slot = ({ slot, pageCount, windowSize, page, disabled, onChange }: SlotPro
   )
   const press = useFacetCallback(
     (value: number, current: number, isDisabled: number) => (event: MouseEvent) => {
-      if (isDisabled || event.button !== 0 || value === current) return
+      if (isDisabled || !isPrimaryPress(event) || value === current) return
       onChange?.(value)
     },
     [onChange],

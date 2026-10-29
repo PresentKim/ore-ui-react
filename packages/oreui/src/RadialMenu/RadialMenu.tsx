@@ -1,5 +1,7 @@
 import { useFacetCallback, useFacetMap, useFacetState, useFacetWrap } from '@react-facet/core'
 import type { Facet } from '@react-facet/core'
+import { isMouseFromTouch, isPrimaryPress, pointOf } from '@ore-ui-react/core/src/pointer'
+import type { PressEvent } from '@ore-ui-react/core/src/pointer'
 import { RADIAL_SIZE, sectorAtPointer, sectorPlacement } from '@ore-ui-react/core/src/radialmenu'
 import type { RadialMenuProps } from '@ore-ui-react/core/src/radialmenu'
 import './radialmenu.css'
@@ -30,9 +32,10 @@ export const RadialMenu = ({ items, disabled, onChange }: RadialMenuProps) => {
     [disabledFacet],
   )
 
-  const sectorOfEvent = (event: MouseEvent) => {
+  const sectorOfEvent = (event: PressEvent) => {
     const rect = (event.currentTarget as HTMLElement).getBoundingClientRect()
-    return sectorAtPointer(event.clientX, event.clientY, rect, count)
+    const { clientX, clientY } = pointOf(event)
+    return sectorAtPointer(clientX, clientY, rect, count)
   }
 
   const onMouseMove = useFacetCallback(
@@ -43,9 +46,9 @@ export const RadialMenu = ({ items, disabled, onChange }: RadialMenuProps) => {
     [disabledFacet],
   )
 
-  const onMouseDown = useFacetCallback(
-    (isDisabled: boolean) => (event: MouseEvent) => {
-      if (isDisabled || event.button !== 0) return
+  const onPress = useFacetCallback(
+    (isDisabled: boolean) => (event: PressEvent) => {
+      if (isDisabled || !isPrimaryPress(event) || isMouseFromTouch(event)) return
       const index = sectorOfEvent(event)
       if (index >= 0) onChange?.(index)
     },
@@ -58,7 +61,8 @@ export const RadialMenu = ({ items, disabled, onChange }: RadialMenuProps) => {
       className={rootClass}
       style={{ width: `${RADIAL_SIZE}rem`, height: `${RADIAL_SIZE}rem` }}
       onMouseMove={onMouseMove}
-      onMouseDown={onMouseDown}
+      onMouseDown={onPress}
+      onTouchStart={onPress}
       onMouseLeave={() => setHighlight(-1)}
     >
       {items.map((label, index) => (

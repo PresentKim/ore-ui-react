@@ -2,6 +2,7 @@ import { Children } from 'react'
 import { useFacetCallback, useFacetMap, useFacetWrap } from '@react-facet/core'
 import { carouselPageCount, trackOffset, type CarouselProps } from '@ore-ui-react/core/src/carousel'
 import { stepPage } from '@ore-ui-react/core/src/pagination'
+import { isPrimaryPress } from '@ore-ui-react/core/src/pointer'
 import './carousel.css'
 
 type PageFacet = ReturnType<typeof useFacetWrap<number>>
@@ -56,7 +57,7 @@ const Step = ({ direction, pageCount, loop, page, onChange }: StepProps) => {
   )
   const press = useFacetCallback(
     (current: number) => (event: MouseEvent) => {
-      if (event.button !== 0) return
+      if (!isPrimaryPress(event)) return
       const target = stepPage(current, pageCount, direction, loop)
       if (target !== undefined) onChange?.(target)
     },
@@ -84,7 +85,7 @@ const Dot = ({ number, page, onChange }: DotProps) => {
   )
   const press = useFacetCallback(
     (current: number) => (event: MouseEvent) => {
-      if (event.button !== 0 || current === number) return
+      if (!isPrimaryPress(event) || current === number) return
       onChange?.(number)
     },
     [number, onChange],

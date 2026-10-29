@@ -5,6 +5,7 @@ import type {
   AccordionItemProps,
   AccordionProps,
 } from '@ore-ui-react/core/src/accordion'
+import { isPrimaryPress } from '@ore-ui-react/core/src/pointer'
 import './accordion.css'
 
 const AccordionContext = createContext<AccordionContextValue | null>(null)
@@ -68,7 +69,7 @@ export const AccordionItem = ({ id, title, disabled, children }: AccordionItemPr
 
   const press = useFacetCallback(
     (isBlocked: boolean) => (event: MouseEvent) => {
-      if (isBlocked || event.button !== 0) return
+      if (isBlocked || !isPrimaryPress(event)) return
       toggle(id)
     },
     [id, toggle],

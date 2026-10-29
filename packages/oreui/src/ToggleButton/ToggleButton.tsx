@@ -1,4 +1,5 @@
 import { useFacetCallback, useFacetMap, useFacetState, useFacetWrap } from '@react-facet/core'
+import { isPrimaryPress } from '@ore-ui-react/core'
 import type { ToggleButtonProps } from '@ore-ui-react/core'
 import { useEffect, useRef } from 'react'
 import './toggle-button.css'
@@ -37,7 +38,7 @@ export function ToggleButton({ value, disabled = false, onChange }: ToggleButton
   }, [setSliding])
   const press = useFacetCallback(
     (isOn, off) => (event: MouseEvent) => {
-      if (off || event.button !== 0) return
+      if (off || !isPrimaryPress(event)) return
       setSliding(true)
       onChange?.(!isOn)
     },

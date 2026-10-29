@@ -1,6 +1,7 @@
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import { createFacet } from '@react-facet/core'
-import { act, fireEvent, render } from '@react-facet/dom-fiber-testing-library'
+import { act, cleanup, fireEvent, render } from '@react-facet/dom-fiber-testing-library'
+import { LAYER_ID } from '@ore-ui-react/core/src/layer'
 import { Tutorial } from './Tutorial'
 
 const rect = (x: number, y: number, w: number, h: number) =>
@@ -22,12 +23,15 @@ const setup = (step: number, extra: { onChange?: (s: number) => void; onFinish?:
   window.innerWidth = 400
   window.innerHeight = 300
   const view = render(<Tutorial steps={steps} step={step} {...extra} />)
-  const q = (selector: string) => view.container.querySelector(selector) as HTMLElement
-  const buttons = () => Array.from(view.container.querySelectorAll('.oui-button')) as HTMLElement[]
+  const q = (selector: string) => document.querySelector(`#${LAYER_ID} ${selector}`) as HTMLElement
+  const buttons = () => Array.from(document.querySelectorAll(`#${LAYER_ID} .oui-button`)) as HTMLElement[]
   return { view, q, buttons }
 }
 
-afterEach(() => vi.restoreAllMocks())
+afterEach(() => {
+  cleanup()
+  vi.restoreAllMocks()
+})
 
 describe('oreui Tutorial', () => {
   it('highlight box matches the target rect', () => {
@@ -98,9 +102,9 @@ describe('oreui Tutorial', () => {
     mockRects()
     document.body.innerHTML = '<div id="a"></div><div id="b"></div>'
     const step = createFacet({ initialValue: 0 })
-    const { container } = render(<Tutorial steps={steps} step={step} />)
+    render(<Tutorial steps={steps} step={step} />)
     act(() => step.set(1))
-    expect(container.querySelector('.oui-tutorial-title')?.textContent).toBe('Two')
+    expect(document.querySelector(`#${LAYER_ID} .oui-tutorial-title`)?.textContent).toBe('Two')
   })
 
   it('renders nothing for an out of range step', () => {

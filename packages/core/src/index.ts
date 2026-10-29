@@ -1,5 +1,7 @@
 export type { FacetProp, ButtonProps, CheckboxProps, ToggleButtonProps, SliderProps } from './props'
 export { usePress } from './press'
+export * from './pointer'
+export * from './layer'
 export { snapToStep, ratioOf, valueFromPointer } from './range'
 export * from './accordion'
 export * from './carousel'

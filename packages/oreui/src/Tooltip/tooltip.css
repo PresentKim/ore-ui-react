@@ -2,7 +2,8 @@
    Estimates (not read from index-*.css; the look follows the Ore UI dark panel tokens used by the checkbox and
    the SkyGear tooltip in SkyGear/assets/resourcepack/oreui/hbui/oui-ddui.css):
      background #1e1e1f, border 0.2rem solid #48494a, padding 0.7rem 1rem, max width 50rem, font size 1.4rem, color #ffffff,
-     no pointer events, placed with position fixed from core placeTooltip (right of the target, flipped and clamped). */
+     no pointer events, drawn in the core #ou-layer with position absolute from core placeTooltip (right of the target,
+     flipped and clamped 6px inside the screen). */
 .oui-tooltip {
   position: relative;
   display: flex;
@@ -11,7 +12,7 @@
 }
 
 .oui-tooltip-tip {
-  position: fixed;
+  position: absolute;
   z-index: 1000;
   display: flex;
   flex-direction: column;

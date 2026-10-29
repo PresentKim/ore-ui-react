@@ -1,19 +1,21 @@
 /* Values table for the JSON UI tutorial. Card colors reuse the dialog frame from textures/ui/dialog_background_opaque.png
    in bedrock-samples: 1px outer #000000, 2px top and left #ffffff, face #c6c6c6, 2px bottom and right #555555.
    Estimates (not in those files): 1 gui px = 0.2rem, overlay rgba(0, 0, 0, 0.5), highlight border 0.2rem #ffffff,
-   card width 28rem, text color #404040, title 1.4rem, action gap 0.8rem. Card and highlight use position fixed in viewport pixels. */
+   card width 28rem, text color #404040, title 1.4rem, action gap 0.8rem. The overlay is drawn in the core #ou-layer
+   and takes presses; card and highlight use position absolute in screen pixels. */
 .jui-tutorial {
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 100;
+  pointer-events: auto;
 }
 
 .jui-tutorial-highlight {
-  position: fixed;
+  position: absolute;
   box-sizing: border-box;
   border-style: solid;
   border-width: 0.2rem;
@@ -22,7 +24,7 @@
 }
 
 .jui-tutorial-card {
-  position: fixed;
+  position: absolute;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;

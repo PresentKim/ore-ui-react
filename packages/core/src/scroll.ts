@@ -2,6 +2,8 @@ import { useEffect, useRef } from 'react'
 import type { ReactNode } from 'react'
 import { useFacetMap, useFacetState } from '@react-facet/core'
 import type { Facet } from '@react-facet/core'
+import { isMouseFromTouch, isPrimaryPress, pointOf, trackDrag } from './pointer'
+import type { PointerPoint, PressEvent } from './pointer'
 
 export type ScrollProps = {
   children?: ReactNode
@@ -28,7 +30,7 @@ export type ScrollBinding = {
   display: Facet<string>
   top: Facet<string>
   height: Facet<string>
-  onHandleMouseDown: (event: MouseEvent) => void
+  onHandlePress: (event: PressEvent) => void
   onBarMouseDown: (event: MouseEvent) => void
 }
 
@@ -103,39 +105,35 @@ export const useScroll = (end: boolean, minThumb = MIN_THUMB): ScrollBinding => 
     }
   }, [end, minThumb])
 
-  const onHandleMouseDown = (event: MouseEvent) => {
+  const onHandlePress = (event: PressEvent) => {
     const content = contentRef.current
     const track = barRef.current
-    if (event.button !== 0 || !content || !track) return
+    if (!isPrimaryPress(event) || !content || !track) return
     event.stopPropagation()
+    if (isMouseFromTouch(event)) return
     detachRef.current?.()
-    const startY = event.clientY
+    const startY = pointOf(event).clientY
     const startTop = content.scrollTop
 
-    const onMove = (move: MouseEvent) => {
+    const onMove = ({ clientY }: PointerPoint) => {
       const full = content.scrollHeight
       const view = content.clientHeight
       const thumb = thumbOf(startTop, view, full, track.clientHeight, minThumb)
       const room = track.clientHeight - thumb.height
       if (room <= 0) return
-      content.scrollTop = startTop + ((move.clientY - startY) * (full - view)) / room
+      content.scrollTop = startTop + ((clientY - startY) * (full - view)) / room
       syncStuck()
       update()
     }
-    const detach = () => {
-      document.removeEventListener('mousemove', onMove)
-      document.removeEventListener('mouseup', detach)
+    detachRef.current = trackDrag(onMove, () => {
       detachRef.current = null
-    }
-    document.addEventListener('mousemove', onMove)
-    document.addEventListener('mouseup', detach)
-    detachRef.current = detach
+    })
   }
 
   const onBarMouseDown = (event: MouseEvent) => {
     const content = contentRef.current
     const track = barRef.current
-    if (event.button !== 0 || !content || !track) return
+    if (!isPrimaryPress(event) || !content || !track) return
     const rect = track.getBoundingClientRect()
     const handleTop = rect.top + handleTopRef.current
     content.scrollTop += event.clientY < handleTop ? -content.clientHeight : content.clientHeight
@@ -143,5 +141,5 @@ export const useScroll = (end: boolean, minThumb = MIN_THUMB): ScrollBinding => 
     update()
   }
 
-  return { contentRef, barRef, display, top, height, onHandleMouseDown, onBarMouseDown }
+  return { contentRef, barRef, display, top, height, onHandlePress, onBarMouseDown }
 }

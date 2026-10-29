@@ -1,4 +1,5 @@
 import { useFacetCallback, useFacetMap, useFacetWrap } from '@react-facet/core'
+import { isPrimaryPress } from '@ore-ui-react/core'
 import type { CheckboxProps } from '@ore-ui-react/core'
 import './checkbox.css'
 
@@ -20,7 +21,7 @@ export const Checkbox = ({ checked, label, disabled, onChange }: CheckboxProps) 
 
   const press = useFacetCallback(
     (isChecked: boolean, isDisabled: boolean) => (event: MouseEvent) => {
-      if (isDisabled || event.button !== 0) return
+      if (isDisabled || !isPrimaryPress(event)) return
       onChange?.(!isChecked)
     },
     [onChange],

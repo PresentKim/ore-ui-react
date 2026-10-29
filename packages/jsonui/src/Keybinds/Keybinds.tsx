@@ -7,6 +7,7 @@ import type {
   KeybindsContextValue,
   KeybindsProps,
 } from '@ore-ui-react/core/src/keybinds'
+import { isPrimaryPress } from '@ore-ui-react/core/src/pointer'
 import './keybinds.css'
 
 const KeybindsContext = createContext<KeybindsContextValue | null>(null)
@@ -118,7 +119,7 @@ export const Keybind = ({ action, label }: KeybindProps) => {
 
   const press = useFacetCallback(
     (off: boolean) => (event: MouseEvent) => {
-      if (off || event.button !== 0) return
+      if (off || !isPrimaryPress(event)) return
       toggle(action)
     },
     [action, toggle],

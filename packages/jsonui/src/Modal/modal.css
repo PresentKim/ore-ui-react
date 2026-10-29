@@ -4,9 +4,10 @@
        face #c6c6c6, 2px bottom and right #555555.
    SkyGear oui-mc.css .mc-screen: overlay rgba(0, 0, 0, 0.5) sized 100vw x 100vh, window max 96vw x 96vh.
    Estimates (not in those files): 1 gui px = 0.2rem, title color #404040, content padding 2 gui px,
-   title 1.4rem, action gap 0.8rem. The frame is drawn with a 0.4rem border plus a 0.2rem black box-shadow. */
+   title 1.4rem, action gap 0.8rem. The frame is drawn with a 0.4rem border plus a 0.2rem black box-shadow.
+   The overlay is drawn in the core #ou-layer and takes presses. */
 .jui-modal {
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   width: 100vw;
@@ -16,6 +17,7 @@
   justify-content: center;
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 100;
+  pointer-events: auto;
 }
 
 .jui-modal-window {

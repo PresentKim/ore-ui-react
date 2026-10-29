@@ -1,6 +1,7 @@
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import { createFacet } from '@react-facet/core'
-import { fireEvent, render } from '@react-facet/dom-fiber-testing-library'
+import { cleanup, fireEvent, render } from '@react-facet/dom-fiber-testing-library'
+import { LAYER_ID } from '@ore-ui-react/core/src/layer'
 import { Tooltip } from './Tooltip'
 
 const rect = (x: number, y: number, w: number, h: number) =>
@@ -11,22 +12,27 @@ const mockRects = (target: DOMRect, tip: DOMRect) =>
     return this.classList.contains('jui-tooltip-tip') ? tip : target
   })
 
-afterEach(() => vi.restoreAllMocks())
+afterEach(() => {
+  cleanup()
+  vi.restoreAllMocks()
+})
 
 describe('jsonui Tooltip', () => {
   const setup = (open?: ReturnType<typeof createFacet<boolean>>) => {
     const view = render(
       <Tooltip content="Hint" open={open}>
-        <span>Target</span>
+        <span className="target">Target</span>
       </Tooltip>,
     )
     const root = view.container.querySelector('.jui-tooltip') as HTMLElement
-    const tip = view.container.querySelector('.jui-tooltip-tip') as HTMLElement
+    const tip = document.querySelector(`#${LAYER_ID} .jui-tooltip-tip`) as HTMLElement
     return { view, root, tip }
   }
 
-  it('renders the content', () => {
-    expect(setup().tip.textContent).toBe('Hint')
+  it('renders the content in the layer', () => {
+    const { view, tip } = setup()
+    expect(tip.textContent).toBe('Hint')
+    expect(view.container.querySelector('.jui-tooltip-tip')).toBeNull()
   })
 
   it('hover shows and mouseleave hides', () => {
@@ -35,6 +41,14 @@ describe('jsonui Tooltip', () => {
     fireEvent.mouseEnter(root)
     expect(tip.style.visibility).toBe('visible')
     fireEvent.mouseLeave(root)
+    expect(tip.style.visibility).toBe('hidden')
+  })
+
+  it('touchstart on the target shows and a touchstart elsewhere hides', () => {
+    const { root, tip } = setup()
+    fireEvent.touchStart(root.querySelector('.target') as HTMLElement)
+    expect(tip.style.visibility).toBe('visible')
+    fireEvent.touchStart(document.body)
     expect(tip.style.visibility).toBe('hidden')
   })
 
@@ -57,7 +71,7 @@ describe('jsonui Tooltip', () => {
     const { root, tip } = setup()
     fireEvent.mouseEnter(root)
     expect(tip.style.left).toBe('330px')
-    expect(tip.style.top).toBe('0px')
+    expect(tip.style.top).toBe('6px')
     expect(tip.className).toContain('left')
   })
 })

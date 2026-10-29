@@ -1,62 +1,66 @@
-import { describe, expect, it, vi } from 'vitest'
+import { afterEach, describe, expect, it, vi } from 'vitest'
 import { createFacet } from '@react-facet/core'
-import { act, fireEvent, render } from '@react-facet/dom-fiber-testing-library'
+import { act, cleanup, fireEvent, render } from '@react-facet/dom-fiber-testing-library'
+import { LAYER_ID } from '@ore-ui-react/core/src/layer'
 import { Modal } from './Modal'
+
+afterEach(cleanup)
 
 const readCss = async () => {
   const fs = await vi.importActual<{ readFileSync: (path: string, encoding: string) => string }>('node:fs')
   return fs.readFileSync('packages/oreui/src/Modal/modal.css', 'utf8')
 }
 
-const overlay = (container: HTMLElement) => container.querySelector('.oui-modal') as HTMLElement
-const windowOf = (container: HTMLElement) => container.querySelector('.oui-modal-window') as HTMLElement
+const layer = () => document.getElementById(LAYER_ID) as HTMLElement
+const overlay = () => document.querySelector(`#${LAYER_ID} .oui-modal`) as HTMLElement
+const windowOf = () => document.querySelector(`#${LAYER_ID} .oui-modal-window`) as HTMLElement
 
 describe('Modal', () => {
   it('renders nothing when closed', () => {
-    const { container } = render(<Modal open={false}>Body</Modal>)
-    expect(overlay(container)).toBeNull()
+    render(<Modal open={false}>Body</Modal>)
+    expect(overlay()).toBeNull()
   })
 
   it('renders title, children and actions when open', () => {
-    const { container } = render(
+    render(
       <Modal open title="Quit" actions={<span>Yes</span>}>
         Body
       </Modal>,
     )
-    expect(container.textContent).toContain('Quit')
-    expect(container.textContent).toContain('Body')
-    expect(container.textContent).toContain('Yes')
+    expect(layer().textContent).toContain('Quit')
+    expect(layer().textContent).toContain('Body')
+    expect(layer().textContent).toContain('Yes')
   })
 
   it('follows the open facet', () => {
     const open = createFacet({ initialValue: false })
-    const { container } = render(<Modal open={open}>Body</Modal>)
-    expect(overlay(container)).toBeNull()
+    render(<Modal open={open}>Body</Modal>)
+    expect(overlay()).toBeNull()
     act(() => open.set(true))
-    expect(overlay(container)).not.toBeNull()
+    expect(overlay()).not.toBeNull()
     act(() => open.set(false))
-    expect(overlay(container)).toBeNull()
+    expect(overlay()).toBeNull()
   })
 
   it('calls onClose on overlay mousedown', () => {
     const onClose = vi.fn()
-    const { container } = render(
+    render(
       <Modal open onClose={onClose}>
         Body
       </Modal>,
     )
-    fireEvent.mouseDown(overlay(container), { button: 0 })
+    fireEvent.mouseDown(overlay(), { button: 0 })
     expect(onClose).toHaveBeenCalledTimes(1)
   })
 
   it('keeps presses inside the window', () => {
     const onClose = vi.fn()
-    const { container } = render(
+    render(
       <Modal open onClose={onClose}>
         Body
       </Modal>,
     )
-    fireEvent.mouseDown(windowOf(container), { button: 0 })
+    fireEvent.mouseDown(windowOf(), { button: 0 })
     expect(onClose).not.toHaveBeenCalled()
   })
 

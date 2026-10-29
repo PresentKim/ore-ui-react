@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef } from 'react'
 import { useFacetCallback, useFacetEffect, useFacetMap, useFacetState, useFacetWrap } from '@react-facet/core'
-import { valueFromPointer } from '@ore-ui-react/core'
+import { isMouseFromTouch, isPrimaryPress, pointOf, trackDrag, valueFromPointer } from '@ore-ui-react/core'
+import type { PointerPoint, PressEvent } from '@ore-ui-react/core'
 import { adoptHex, hexToHsv, hsvToHex, normalizeHex } from '@ore-ui-react/core/src/colorpicker'
 import type { ColorPickerProps, HSV } from '@ore-ui-react/core/src/colorpicker'
 import { useNativeInput } from '@ore-ui-react/core/src/input'
@@ -42,27 +43,21 @@ export const ColorPicker = ({ value, onChange }: ColorPickerProps) => {
   )
 
   const startDrag = useCallback(
-    (event: MouseEvent, report: (clientX: number, clientY: number) => void) => {
+    (event: PressEvent, report: (point: PointerPoint) => void) => {
       detachRef.current?.()
-      const onMove = (moveEvent: MouseEvent) => report(moveEvent.clientX, moveEvent.clientY)
-      const detach = () => {
-        document.removeEventListener('mousemove', onMove)
-        document.removeEventListener('mouseup', detach)
+      detachRef.current = trackDrag(report, () => {
         detachRef.current = null
-      }
-      document.addEventListener('mousemove', onMove)
-      document.addEventListener('mouseup', detach)
-      detachRef.current = detach
-      report(event.clientX, event.clientY)
+      })
+      report(pointOf(event))
     },
     [],
   )
 
   const onAreaDown = useFacetCallback(
-    (current: HSV) => (event: MouseEvent) => {
+    (current: HSV) => (event: PressEvent) => {
       const area = areaRef.current
-      if (event.button !== 0 || !area) return
-      startDrag(event, (clientX, clientY) => {
+      if (!isPrimaryPress(event) || isMouseFromTouch(event) || !area) return
+      startDrag(event, ({ clientX, clientY }) => {
         const point = xyFromPointer(clientX, clientY, area.getBoundingClientRect(), UNIT)
         publish({ h: current.h, s: point.x, v: 1 - point.y })
       })
@@ -72,10 +67,10 @@ export const ColorPicker = ({ value, onChange }: ColorPickerProps) => {
   )
 
   const onHueDown = useFacetCallback(
-    (current: HSV) => (event: MouseEvent) => {
+    (current: HSV) => (event: PressEvent) => {
       const strip = hueRef.current
-      if (event.button !== 0 || !strip) return
-      startDrag(event, (clientX) => {
+      if (!isPrimaryPress(event) || isMouseFromTouch(event) || !strip) return
+      startDrag(event, ({ clientX }) => {
         const rect = strip.getBoundingClientRect()
         publish({ h: valueFromPointer(clientX, rect.left, rect.width, 0, 360, 0), s: current.s, v: current.v })
       })
@@ -97,10 +92,10 @@ export const ColorPicker = ({ value, onChange }: ColorPickerProps) => {
 
   return (
     <fast-div className="jui-colorpicker">
-      <fast-div ref={areaRef} className="jui-colorpicker-area" style={{ backgroundColor: hueHex }} onMouseDown={onAreaDown}>
+      <fast-div ref={areaRef} className="jui-colorpicker-area" style={{ backgroundColor: hueHex }} onMouseDown={onAreaDown} onTouchStart={onAreaDown}>
         <fast-div className="jui-colorpicker-handle" style={{ left: handleLeft, top: handleTop }} />
       </fast-div>
-      <fast-div ref={hueRef} className="jui-colorpicker-hue" onMouseDown={onHueDown}>
+      <fast-div ref={hueRef} className="jui-colorpicker-hue" onMouseDown={onHueDown} onTouchStart={onHueDown}>
         <fast-div className="jui-colorpicker-hue-handle" style={{ left: hueLeft }} />
       </fast-div>
       <fast-div className="jui-colorpicker-preview">

@@ -20,7 +20,8 @@ export const Scroll = ({ children, end = false, minThumb }: ScrollProps) => {
         <fast-div
           className="jui-scroll-handle"
           style={{ top: scroll.top, height: scroll.height }}
-          onMouseDown={scroll.onHandleMouseDown}
+          onMouseDown={scroll.onHandlePress}
+          onTouchStart={scroll.onHandlePress}
         />
       </fast-div>
     </fast-div>

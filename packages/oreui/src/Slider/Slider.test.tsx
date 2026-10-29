@@ -8,6 +8,12 @@ const mockRect = () =>
     .spyOn(Element.prototype, 'getBoundingClientRect')
     .mockReturnValue({ left: 100, width: 200, right: 300, top: 0, bottom: 10, height: 10, x: 100, y: 0, toJSON: () => ({}) })
 
+const touch = (target: Element | Document, type: string, clientX: number) => {
+  const event = new Event(type, { bubbles: true })
+  Object.defineProperty(event, 'touches', { value: [{ clientX, clientY: 0 }] })
+  fireEvent(target, event)
+}
+
 const setup = (props: { disabled?: boolean } = {}) => {
   const value = createFacet({ initialValue: 0 })
   const disabled = createFacet({ initialValue: props.disabled ?? false })
@@ -22,6 +28,7 @@ describe('oreui Slider', () => {
     mockRect()
   })
   afterEach(() => {
+    vi.useRealTimers()
     vi.restoreAllMocks()
   })
 
@@ -53,6 +60,21 @@ describe('oreui Slider', () => {
     fireEvent.mouseUp(document)
     onChange.mockClear()
     fireEvent.mouseMove(document, { clientX: 250 })
+    expect(onChange).not.toHaveBeenCalled()
+  })
+
+  it('follows a touch drag until touchend', () => {
+    vi.useFakeTimers({ toFake: ['Date'] })
+    vi.setSystemTime(0)
+    const { track, onChange } = setup()
+    touch(track, 'touchstart', 150)
+    fireEvent.mouseDown(track, { button: 0, clientX: 300 })
+    expect(onChange).toHaveBeenLastCalledWith(25)
+    touch(document, 'touchmove', 250)
+    expect(onChange).toHaveBeenLastCalledWith(75)
+    touch(document, 'touchend', 250)
+    onChange.mockClear()
+    touch(document, 'touchmove', 150)
     expect(onChange).not.toHaveBeenCalled()
   })
 

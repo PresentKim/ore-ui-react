@@ -1,7 +1,22 @@
-import { describe, expect, it, vi } from 'vitest'
+import { afterEach, describe, expect, it, vi } from 'vitest'
 import { createFacet } from '@react-facet/core'
-import { fireEvent, render } from '@react-facet/dom-fiber-testing-library'
+import { cleanup, fireEvent, render } from '@react-facet/dom-fiber-testing-library'
+import { LAYER_ID } from '@ore-ui-react/core/src/layer'
+import { placeList } from '@ore-ui-react/core/src/dropdown'
 import { Dropdown } from './Dropdown'
+
+const rect = (x: number, y: number, w: number, h: number) =>
+  ({ x, y, left: x, top: y, width: w, height: h, right: x + w, bottom: y + h }) as DOMRect
+
+const mockRects = (trigger: DOMRect, list: DOMRect) =>
+  vi.spyOn(Element.prototype, 'getBoundingClientRect').mockImplementation(function (this: Element) {
+    return this.classList.contains('oui-dropdown-list') ? list : trigger
+  })
+
+afterEach(() => {
+  cleanup()
+  vi.restoreAllMocks()
+})
 
 const options = [
   { value: 'a', label: 'Alpha' },
@@ -18,16 +33,77 @@ const setup = (props: { value?: string; disabled?: boolean } = {}) => {
   )
   const root = view.container.querySelector('.oui-dropdown') as HTMLElement
   const trigger = view.container.querySelector('.oui-dropdown-trigger') as HTMLElement
-  const optionEls = Array.from(view.container.querySelectorAll('.oui-dropdown-option')) as HTMLElement[]
+  const list = document.querySelector(`#${LAYER_ID} .oui-dropdown-list`) as HTMLElement
+  const optionEls = Array.from(list.querySelectorAll('.oui-dropdown-option')) as HTMLElement[]
   const visibleText = () =>
     Array.from(trigger.querySelectorAll('.oui-dropdown-current > *'))
       .filter((el) => (el as HTMLElement).style.display !== 'none')
       .map((el) => el.textContent)
       .join('')
-  return { value, disabled, onChange, view, root, trigger, optionEls, visibleText }
+  return { value, disabled, onChange, view, root, trigger, list, optionEls, visibleText }
 }
 
+describe('placeList', () => {
+  const view = { w: 400, h: 300 }
+
+  it('goes below the trigger at its width', () => {
+    expect(placeList({ x: 10, y: 10, w: 120, h: 30 }, 100, view, 6)).toEqual({ x: 10, y: 40, w: 120, maxH: null })
+  })
+
+  it('goes above when there is no room below', () => {
+    expect(placeList({ x: 10, y: 240, w: 120, h: 30 }, 100, view, 6)).toEqual({ x: 10, y: 140, w: 120, maxH: null })
+  })
+
+  it('caps the height to the larger side', () => {
+    expect(placeList({ x: 10, y: 100, w: 120, h: 30 }, 400, view, 6)).toEqual({ x: 10, y: 130, w: 120, maxH: 164 })
+    expect(placeList({ x: 10, y: 200, w: 120, h: 30 }, 400, view, 6)).toEqual({ x: 10, y: 6, w: 120, maxH: 194 })
+  })
+
+  it('clamps inside the screen width', () => {
+    expect(placeList({ x: 350, y: 10, w: 120, h: 30 }, 100, view, 6).x).toBe(274)
+  })
+})
+
 describe('oreui Dropdown', () => {
+  it('renders the list in the layer and an option press there selects it', () => {
+    const { view, root, trigger, list, optionEls, onChange } = setup()
+    expect(view.container.querySelector('.oui-dropdown-list')).toBeNull()
+    fireEvent.mouseDown(trigger, { button: 0 })
+    expect(list.style.display).toBe('block')
+    fireEvent.mouseDown(optionEls[0], { button: 0 })
+    expect(onChange).toHaveBeenCalledWith('a')
+    expect(root.className).not.toContain('open')
+    expect(list.style.display).toBe('none')
+  })
+
+  it('a press on the list outside an option keeps it open', () => {
+    const { root, trigger, list } = setup()
+    fireEvent.mouseDown(trigger, { button: 0 })
+    fireEvent.mouseDown(list, { button: 0 })
+    expect(root.className).toContain('open')
+  })
+
+  it('places the list below the trigger at its width', () => {
+    window.innerWidth = 400
+    window.innerHeight = 300
+    mockRects(rect(20, 30, 150, 32), rect(0, 0, 150, 80))
+    const { trigger, list } = setup()
+    fireEvent.mouseDown(trigger, { button: 0 })
+    expect(list.style.left).toBe('20px')
+    expect(list.style.top).toBe('62px')
+    expect(list.style.width).toBe('150px')
+    expect(list.style.maxHeight).toBe('')
+  })
+
+  it('places the list above the trigger near the bottom', () => {
+    window.innerWidth = 400
+    window.innerHeight = 300
+    mockRects(rect(20, 250, 150, 32), rect(0, 0, 150, 80))
+    const { trigger, list } = setup()
+    fireEvent.mouseDown(trigger, { button: 0 })
+    expect(list.style.top).toBe('170px')
+  })
+
   it('press opens and closes', () => {
     const { root, trigger } = setup()
     fireEvent.mouseDown(trigger, { button: 0 })

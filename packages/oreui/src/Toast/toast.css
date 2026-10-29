@@ -1,9 +1,9 @@
 /* Vanilla Ore UI toast. Colors reuse the measured theme from hbui/index-aa96eedc6c94fe36a35b.css:
    border #000000, face #d0d1d4, bottom shadow #58585a, text #1e1e1f.
    Estimates (the bundle has no toast rule): host sized 100vw x 100vh with 1.6rem inset, toast min width 20rem,
-   padding 1.2rem, gap 0.8rem, font 1.4rem. */
+   padding 1.2rem, gap 0.8rem, font 1.4rem. The host is drawn in the core #ou-layer; only the toasts take presses. */
 .oui-toast-host {
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   width: 100vw;

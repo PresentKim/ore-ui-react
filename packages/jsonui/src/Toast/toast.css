@@ -4,9 +4,10 @@
        face #212121.
      ui/_global_variables.json: toast text color 1.0 (#ffffff).
    Estimates (not in those files): 1 gui px = 0.2rem, host sized 100vw x 100vh with 1.6rem inset, toast min width
-   20rem, padding 1.2rem, gap 0.8rem, font 1.4rem. The frame is a 0.4rem border plus a 0.2rem black box-shadow. */
+   20rem, padding 1.2rem, gap 0.8rem, font 1.4rem. The frame is a 0.4rem border plus a 0.2rem black box-shadow.
+   The host is drawn in the core #ou-layer; only the toasts take presses. */
 .jui-toast-host {
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   width: 100vw;

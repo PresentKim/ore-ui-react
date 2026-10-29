@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, it } from 'vitest'
+import { afterEach, describe, expect, it, vi } from 'vitest'
 import { act, fireEvent, render } from '@react-facet/dom-fiber-testing-library'
 import { thumbOf } from '@ore-ui-react/core/src/scroll'
 import { Scroll } from './Scroll'
@@ -36,7 +36,14 @@ const mockLayout = () => {
   })
 }
 
+const touch = (target: Element | Document, type: string, clientY: number) => {
+  const event = new Event(type, { bubbles: true })
+  Object.defineProperty(event, 'touches', { value: [{ clientX: 0, clientY }] })
+  fireEvent(target, event)
+}
+
 afterEach(() => {
+  vi.useRealTimers()
   restore.splice(0).forEach((undo) => undo())
   sizes.view = 100
   sizes.full = 400
@@ -118,6 +125,20 @@ describe('oreui Scroll', () => {
     expect(content.scrollTop).toBe(120)
     fireEvent.mouseUp(document)
     fireEvent.mouseMove(document, { clientY: 60 })
+    expect(content.scrollTop).toBe(120)
+  })
+
+  it('touch drag on the thumb scrolls without paging from the tap mousedown', () => {
+    vi.useFakeTimers({ toFake: ['Date'] })
+    vi.setSystemTime(0)
+    const { content, handle } = setup()
+    touch(handle, 'touchstart', 0)
+    fireEvent.mouseDown(handle, { button: 0, clientY: 0 })
+    expect(content.scrollTop).toBe(0)
+    touch(document, 'touchmove', 30)
+    expect(content.scrollTop).toBe(120)
+    touch(document, 'touchend', 30)
+    touch(document, 'touchmove', 60)
     expect(content.scrollTop).toBe(120)
   })
 

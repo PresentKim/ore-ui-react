@@ -1,4 +1,5 @@
 import { useFacetCallback, useFacetMap, useFacetWrap } from '@react-facet/core'
+import { isPrimaryPress } from '@ore-ui-react/core/src/pointer'
 import type { SegmentButtonProps, SegmentOption, SegmentProps } from '@ore-ui-react/core/src/segment'
 import './segment.css'
 
@@ -15,7 +16,7 @@ export const SegmentButton = ({ value, label, active, disabled, onPress }: Segme
 
   const press = useFacetCallback(
     (isDisabled: boolean) => (event: MouseEvent) => {
-      if (isDisabled || event.button !== 0) return
+      if (isDisabled || !isPrimaryPress(event)) return
       onPress?.(value)
     },
     [onPress, value],

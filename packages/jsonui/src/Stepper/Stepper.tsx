@@ -1,5 +1,6 @@
 import { useRef } from 'react'
 import { useFacetCallback, useFacetEffect, useFacetMap, useFacetWrap } from '@react-facet/core'
+import { isPrimaryPress } from '@ore-ui-react/core/src/pointer'
 import type { StepperItem, StepperProps } from '@ore-ui-react/core/src/stepper'
 import './stepper.css'
 
@@ -41,7 +42,7 @@ export const Stepper = ({ items, value, loop = false, disabled, onChange }: Step
   }
   const pressPrev = useFacetCallback(
     (blocked: boolean) => (event: MouseEvent) => {
-      if (blocked || event.button !== 0) return
+      if (blocked || !isPrimaryPress(event)) return
       step(-1)
     },
     [items, loop, onChange],
@@ -49,7 +50,7 @@ export const Stepper = ({ items, value, loop = false, disabled, onChange }: Step
   )
   const pressNext = useFacetCallback(
     (blocked: boolean) => (event: MouseEvent) => {
-      if (blocked || event.button !== 0) return
+      if (blocked || !isPrimaryPress(event)) return
       step(1)
     },
     [items, loop, onChange],

@@ -1,5 +1,7 @@
-import { useEffect, useRef } from 'react'
 import { useFacetCallback, useFacetMap, useFacetState, useFacetWrap } from '@react-facet/core'
+import { Layer } from '@ore-ui-react/core/src/layer'
+import { isPrimaryPress } from '@ore-ui-react/core/src/pointer'
+import { useDropdownList } from '@ore-ui-react/core/src/dropdown'
 import type { DropdownOption, DropdownProps } from '@ore-ui-react/core/src/dropdown'
 import './dropdown.css'
 
@@ -7,24 +9,13 @@ export const Dropdown = ({ options, value, placeholder, disabled, onChange }: Dr
   const valueFacet = useFacetWrap<string | undefined>(value)
   const disabledFacet = useFacetWrap(disabled ?? false)
   const [open, setOpen] = useFacetState(false)
-  const rootRef = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    const onOutside = (event: MouseEvent) => {
-      const root = rootRef.current
-      if (root && event.target instanceof Node && root.contains(event.target)) return
-      setOpen(false)
-    }
-    document.addEventListener('mousedown', onOutside)
-    return () => document.removeEventListener('mousedown', onOutside)
-  }, [setOpen])
+  const list = useDropdownList(open, setOpen)
 
   const rootClass = useFacetMap(
     (isOpen, isDisabled) => `oui-dropdown${isOpen ? ' open' : ''}${isDisabled ? ' disabled' : ''}`,
     [],
     [open, disabledFacet],
   )
-  const listDisplay = useFacetMap((isOpen) => (isOpen ? 'block' : 'none'), [], [open])
   const placeholderDisplay = useFacetMap(
     (current) => (options.some((option) => option.value === current) ? 'none' : 'block'),
     [options],
@@ -33,7 +24,7 @@ export const Dropdown = ({ options, value, placeholder, disabled, onChange }: Dr
 
   const toggle = useFacetCallback(
     (isOpen: boolean, isDisabled: boolean) => (event: MouseEvent) => {
-      if (isDisabled || event.button !== 0) return
+      if (isDisabled || !isPrimaryPress(event)) return
       setOpen(!isOpen)
     },
     [setOpen],
@@ -41,8 +32,8 @@ export const Dropdown = ({ options, value, placeholder, disabled, onChange }: Dr
   )
 
   return (
-    <fast-div className={rootClass} ref={rootRef}>
-      <fast-div className="oui-dropdown-trigger" onMouseDown={toggle}>
+    <fast-div className={rootClass} ref={list.rootRef}>
+      <fast-div className="oui-dropdown-trigger" ref={list.triggerRef} onMouseDown={toggle}>
         <fast-div className="oui-dropdown-current">
           <fast-div className="oui-dropdown-placeholder" style={{ display: placeholderDisplay }}>
             {placeholder}
@@ -53,20 +44,32 @@ export const Dropdown = ({ options, value, placeholder, disabled, onChange }: Dr
         </fast-div>
         <fast-div className="oui-dropdown-chevron" />
       </fast-div>
-      <fast-div className="oui-dropdown-list" style={{ display: listDisplay }}>
-        {options.map((option) => (
-          <Option
-            key={option.value}
-            option={option}
-            value={valueFacet}
-            disabled={disabledFacet}
-            onChoose={(chosen) => {
-              onChange?.(chosen)
-              setOpen(false)
-            }}
-          />
-        ))}
-      </fast-div>
+      <Layer>
+        <fast-div
+          className="oui-dropdown-list"
+          ref={list.listRef}
+          style={{
+            display: list.display,
+            left: list.left,
+            top: list.top,
+            width: list.width,
+            maxHeight: list.maxHeight,
+          }}
+        >
+          {options.map((option) => (
+            <Option
+              key={option.value}
+              option={option}
+              value={valueFacet}
+              disabled={disabledFacet}
+              onChoose={(chosen) => {
+                onChange?.(chosen)
+                setOpen(false)
+              }}
+            />
+          ))}
+        </fast-div>
+      </Layer>
     </fast-div>
   )
 }
@@ -95,7 +98,7 @@ const Option = ({ option, value, disabled, onChoose }: OptionProps) => {
   )
   const press = useFacetCallback(
     (isDisabled: boolean) => (event: MouseEvent) => {
-      if (isDisabled || option.disabled || event.button !== 0) return
+      if (isDisabled || option.disabled || !isPrimaryPress(event)) return
       onChoose(option.value)
     },
     [option.value, option.disabled, onChoose],

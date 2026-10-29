@@ -1,4 +1,5 @@
 import { useFacetCallback, useFacetMap, useFacetWrap } from '@react-facet/core'
+import { isPrimaryPress } from '@ore-ui-react/core/src/pointer'
 import type { RadioGroupProps, RadioOption, RadioProps } from '@ore-ui-react/core/src/radiogroup'
 import './radiogroup.css'
 
@@ -20,7 +21,7 @@ export const Radio = ({ value, label, selected, disabled, onPress }: RadioProps)
 
   const press = useFacetCallback(
     (isDisabled: boolean) => (event: MouseEvent) => {
-      if (isDisabled || event.button !== 0) return
+      if (isDisabled || !isPrimaryPress(event)) return
       onPress?.(value)
     },
     [onPress, value],

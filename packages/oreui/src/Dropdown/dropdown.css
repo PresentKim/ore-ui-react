@@ -5,7 +5,9 @@
      trigger min height 3.2rem, padding 0 1.2rem, background #1e1e1f, border 0.2rem solid #48494a, hover border #b1b2b5,
      open border #ffffff, chevron 0.8rem square rotated border, list background #313233 with border 0.2rem #48494a,
      option padding 0.8rem 1.2rem, option hover #3c3d3e, selected option #3c8527, text #ffffff, disabled option
-     color #8c8d90, disabled dropdown opacity 0.5, list max height 24rem with vertical scroll. */
+     color #8c8d90, disabled dropdown opacity 0.5, list max height 24rem with vertical scroll.
+   The open list is drawn in the core #ou-layer with position absolute, placed by core placeList below the trigger
+   (above it when there is no room) at the trigger width, so it sets its own font and takes presses. */
 .oui-dropdown {
   position: relative;
   display: block;
@@ -58,17 +60,17 @@
 
 .oui-dropdown-list {
   position: absolute;
-  left: 0;
-  top: 100%;
   z-index: 10;
   box-sizing: border-box;
-  width: 100%;
   max-height: 24rem;
   overflow-y: auto;
   background-color: #313233;
   border-style: solid;
   border-width: 0.2rem;
   border-color: #48494a;
+  color: #ffffff;
+  font-family: var(--oui-font, sans-serif);
+  pointer-events: auto;
 }
 
 .oui-dropdown-option {

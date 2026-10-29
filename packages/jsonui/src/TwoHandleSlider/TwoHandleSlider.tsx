@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react'
 import { useFacetCallback, useFacetEffect, useFacetMap, useFacetWrap } from '@react-facet/core'
-import { ratioOf, valueFromPointer } from '@ore-ui-react/core'
+import { isMouseFromTouch, isPrimaryPress, pointOf, ratioOf, trackDrag, valueFromPointer } from '@ore-ui-react/core'
+import type { PressEvent } from '@ore-ui-react/core'
 import type { TwoHandleSliderProps } from '@ore-ui-react/core/src/twohandleslider'
 import './twohandleslider.css'
 
@@ -34,10 +35,10 @@ export const TwoHandleSlider = ({ value, min = 0, max = 100, step = 1, disabled,
     [valueFacet],
   )
 
-  const onMouseDown = useFacetCallback(
-    (isDisabled: boolean) => (event: MouseEvent) => {
+  const onPress = useFacetCallback(
+    (isDisabled: boolean) => (event: PressEvent) => {
       const track = trackRef.current
-      if (isDisabled || event.button !== 0 || !track) return
+      if (isDisabled || !isPrimaryPress(event) || isMouseFromTouch(event) || !track) return
       detachRef.current?.()
 
       const pointerValue = (clientX: number) => {
@@ -46,27 +47,22 @@ export const TwoHandleSlider = ({ value, min = 0, max = 100, step = 1, disabled,
       }
 
       const [startLow, startHigh] = rangeRef.current
-      const pressed = pointerValue(event.clientX)
+      const start = pointOf(event)
+      const pressed = pointerValue(start.clientX)
       const lowDistance = Math.abs(pressed - startLow)
       const highDistance = Math.abs(pressed - startHigh)
       const movesLow = lowDistance < highDistance || (lowDistance === highDistance && pressed < startLow)
 
-      const report = (clientX: number) => {
+      const report = ({ clientX }: { clientX: number }) => {
         const [low, high] = rangeRef.current
         const next = pointerValue(clientX)
         onChange?.(movesLow ? [Math.min(next, high), high] : [low, Math.max(next, low)])
       }
-      const onMove = (moveEvent: MouseEvent) => report(moveEvent.clientX)
-      const detach = () => {
-        document.removeEventListener('mousemove', onMove)
-        document.removeEventListener('mouseup', detach)
-        detachRef.current = null
-      }
 
-      document.addEventListener('mousemove', onMove)
-      document.addEventListener('mouseup', detach)
-      detachRef.current = detach
-      report(event.clientX)
+      detachRef.current = trackDrag(report, () => {
+        detachRef.current = null
+      })
+      report(start)
     },
     [onChange, min, max, step],
     [disabledFacet],
@@ -81,7 +77,7 @@ export const TwoHandleSlider = ({ value, min = 0, max = 100, step = 1, disabled,
   )
 
   return (
-    <fast-div className={rootClass} onMouseDown={onMouseDown}>
+    <fast-div className={rootClass} onMouseDown={onPress} onTouchStart={onPress}>
       <fast-div ref={trackRef} className="jui-twohandleslider-track">
         <fast-div className="jui-twohandleslider-fill" style={{ left: lowPercent, width: fillWidth }} />
         <fast-div className="jui-twohandleslider-thumb" style={{ left: lowPercent }} />
