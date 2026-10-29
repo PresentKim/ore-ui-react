@@ -10,5 +10,5 @@
     "types": [],
     "skipLibCheck": true
   },
-  "include": ["packages/*/src", "apps/docs/src", "test"]
+  "include": ["packages/*/src", "apps/docs/src", "apps/test-pack/src", "test"]
 }

@@ -1,0 +1,17 @@
+{
+  "format_version": 2,
+  "header": {
+    "name": "ore-ui-react test",
+    "description": "Replaces gameplay.html with a probe screen built from ore-ui-react components",
+    "uuid": "81d2e7bb-e613-4c30-9b1a-a09aba09179b",
+    "version": [1, 0, 0],
+    "min_engine_version": [1, 21, 0]
+  },
+  "modules": [
+    {
+      "type": "resources",
+      "uuid": "9ac714ed-ff93-4b94-b4a4-f7fb580ba6d9",
+      "version": [1, 0, 0]
+    }
+  ]
+}

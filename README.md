@@ -81,6 +81,18 @@ npm run dev
 
 `npm run build:docs` builds the app, `npm test` runs the tests, and `npm run typecheck` checks the types.
 
+## Test pack
+
+`apps/test-pack` is a resource pack that replaces `gameplay.html` with a probe screen built from these components. It has the controls, media, input and engine probes of a debug overlay, and a switch between the Ore UI and JSON UI skins.
+
+```
+npm run build -w @ore-ui-react/test-pack
+```
+
+The output is `apps/test-pack/dist/ore-ui-react-test.mcpack`. `npm run dev -w @ore-ui-react/test-pack` serves the same screen in a browser.
+
+The `<script>` and `<link>` bundle names in `static/hbui/gameplay.html` must match the client version. Copy them from the install's `data/gui/dist/hbui/gameplay.html` and keep the two `oui-react-test` tags at the end of `<head>`. The pack needs the empty `content.zipe` so the client trusts the local pack and applies the `hbui` files, and every change needs a version bump in `static/manifest.json`.
+
 ## Gameface CSS rules
 
 The target runtime is Coherent Gameface, which supports a subset of CSS. All CSS in this repository follows these rules:
