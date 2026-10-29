@@ -1,0 +1,77 @@
+/* Vanilla Ore UI progress. Colors reuse the measured theme from hbui/index-aa96eedc6c94fe36a35b.css:
+   border #000000, track #58585a, fill #3c8527, face #d0d1d4, text #1e1e1f.
+   Estimates (the bundle has no progress rule): bar 1.2rem high, circle 6rem with a 0.6rem ring, label 1.2rem. */
+.oui-progress-bar {
+  position: relative;
+  box-sizing: border-box;
+  width: 100%;
+  height: 1.2rem;
+  border-style: solid;
+  border-width: 0.2rem;
+  border-color: #000000;
+  background-color: #58585a;
+}
+
+.oui-progress-fill {
+  height: 100%;
+  background-color: #3c8527;
+}
+
+.oui-progress-circle {
+  position: relative;
+  width: 6rem;
+  height: 6rem;
+  border-radius: 3rem;
+  background-color: #58585a;
+  font-family: var(--oui-font, sans-serif);
+}
+
+.oui-progress-clip {
+  position: absolute;
+  top: 0;
+  width: 3rem;
+  height: 6rem;
+  overflow: hidden;
+}
+
+.oui-progress-clip-right {
+  left: 3rem;
+}
+
+.oui-progress-clip-left {
+  left: 0;
+}
+
+.oui-progress-half {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 3rem;
+  height: 6rem;
+  background-color: #3c8527;
+}
+
+.oui-progress-half-right {
+  border-radius: 0 3rem 3rem 0;
+  transform-origin: left center;
+}
+
+.oui-progress-half-left {
+  border-radius: 3rem 0 0 3rem;
+  transform-origin: right center;
+}
+
+.oui-progress-hole {
+  position: absolute;
+  top: 0.6rem;
+  left: 0.6rem;
+  width: 4.8rem;
+  height: 4.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 2.4rem;
+  background-color: #d0d1d4;
+  color: #1e1e1f;
+  font-size: 1.2rem;
+}
