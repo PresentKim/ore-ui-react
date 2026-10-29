@@ -1,0 +1,33 @@
+/* Values table for the Ore UI text block. Source: hbui/index-aa96eedc6c94fe36a35b.css.
+   Measured: body 1.6rem / line-height 2rem / weight 400 / letter-spacing 0.04rem in "Minecraft Seven v2";
+   small text 1.4rem / line-height 2rem / letter-spacing 0.04rem; heading size 2.4rem with line-height 2.4rem.
+   Estimates (not found in the sources): title and body color #ffffff, caption color #b1b2b5, title weight 700. */
+.oui-textblock {
+  margin: 0;
+  color: #ffffff;
+  font-family: var(--oui-font, sans-serif);
+  font-weight: 400;
+  letter-spacing: 0.04rem;
+  white-space: normal;
+}
+
+.oui-textblock-inline {
+  display: inline;
+}
+
+.oui-textblock-title {
+  font-size: 2.4rem;
+  line-height: 2.4rem;
+  font-weight: 700;
+}
+
+.oui-textblock-body {
+  font-size: 1.6rem;
+  line-height: 2rem;
+}
+
+.oui-textblock-caption {
+  color: #b1b2b5;
+  font-size: 1.4rem;
+  line-height: 2rem;
+}

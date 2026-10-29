@@ -1,0 +1,33 @@
+/* Values table for the JSON UI text block.
+   Found in D:\project\minecraft-bedrock\bedrock-samples\resource_pack\ui\_global_variables.json:
+     $main_header_text_color and $body_text_color [1.0, 1.0, 1.0] (#ffffff); $title_text_color [0.3, 0.3, 0.3] (#4d4d4d);
+     ui_common.json button_text label sets "shadow": false, labels default to a text shadow.
+   Estimates (not in those files): 1 gui px = 0.2rem, default font glyph 8 gui px so body 1.6rem, title 2.4rem,
+   caption 1.4rem with color #aaaaaa, shadow offset 0.2rem #3f3f3f. */
+.jui-textblock {
+  margin: 0;
+  color: #ffffff;
+  font-family: var(--oui-font, sans-serif);
+  font-size: 1.6rem;
+  line-height: 2rem;
+  text-shadow: 0.2rem 0.2rem 0 #3f3f3f;
+  white-space: normal;
+}
+
+.jui-textblock-inline {
+  display: inline;
+}
+
+.jui-textblock-title {
+  font-size: 2.4rem;
+  line-height: 2.8rem;
+}
+
+.jui-textblock-body {
+  font-size: 1.6rem;
+}
+
+.jui-textblock-caption {
+  color: #aaaaaa;
+  font-size: 1.4rem;
+}
