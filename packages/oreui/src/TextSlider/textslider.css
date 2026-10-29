@@ -1,0 +1,15 @@
+/* Values table for the Ore UI text slider.
+   Track, fill and thumb come from ../Slider/slider.css (measured and estimated values listed there).
+   Estimates (not measured): label font size 1.4rem, color #ffffff, label margin below 0.4rem. */
+.oui-textslider {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  font-family: var(--oui-font, sans-serif);
+  font-size: 1.4rem;
+  color: #ffffff;
+}
+
+.oui-textslider-label {
+  margin-bottom: 0.4rem;
+}
