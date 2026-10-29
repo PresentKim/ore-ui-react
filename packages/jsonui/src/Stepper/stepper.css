@@ -1,0 +1,71 @@
+/* Values table for the JSON UI stepper.
+   Found in D:\project\minecraft-bedrock\bedrock-samples\resource_pack:
+     ui/_global_variables.json and textures/ui/button_borderless_light.png: face #c6c6c6, top and left edge #f7f7f7,
+       bottom and right edge #656465, label color #4d4d4d.
+     textures/ui/chevron_left.png and chevron_right.png exist as arrow glyphs.
+   Estimates (not in those files): 1 gui px = 0.2rem, height 4rem (20 gui px), arrow cell 4rem wide, chevron drawn with
+     borders instead of the textures, pressed arrow uses the inverted edges, disabled arrow opacity 0.4, disabled
+     stepper opacity 0.5, font size 1.4rem, min width 16rem. */
+.jui-stepper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  box-sizing: border-box;
+  min-width: 16rem;
+  min-height: 4rem;
+  font-family: var(--oui-font, sans-serif);
+  font-size: 1.4rem;
+  color: #4d4d4d;
+  background-color: #c6c6c6;
+  border-style: solid;
+  border-width: 0.2rem;
+  border-top-color: #f7f7f7;
+  border-left-color: #f7f7f7;
+  border-bottom-color: #656465;
+  border-right-color: #656465;
+}
+
+.jui-stepper-arrow {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  align-self: stretch;
+  width: 4rem;
+}
+
+.jui-stepper-arrow:active {
+  background-color: #b1b2b5;
+}
+
+.jui-stepper-arrow.disabled,
+.jui-stepper-arrow.disabled:active {
+  background-color: transparent;
+  opacity: 0.4;
+}
+
+.jui-stepper-glyph {
+  box-sizing: border-box;
+  width: 0.8rem;
+  height: 0.8rem;
+  border-style: solid;
+  border-width: 0 0.3rem 0.3rem 0;
+  border-color: #4d4d4d;
+}
+
+.jui-stepper-prev .jui-stepper-glyph {
+  transform: rotate(135deg);
+}
+
+.jui-stepper-next .jui-stepper-glyph {
+  transform: rotate(-45deg);
+}
+
+.jui-stepper-current {
+  flex: 1 1 auto;
+  text-align: center;
+}
+
+.jui-stepper.disabled {
+  opacity: 0.5;
+}

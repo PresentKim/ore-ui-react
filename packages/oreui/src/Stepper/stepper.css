@@ -1,0 +1,65 @@
+/* Values table for the Ore UI stepper.
+   Found in C:\XboxGames\Minecraft for Windows\Content\data\gui\dist\hbui\index-*.css: no stepper or value cycler rules
+   were located; the look reuses the dropdown trigger theme.
+   Estimates: height 3.2rem, background #1e1e1f, border 0.2rem solid #48494a, arrow cell 3.2rem wide, arrow hover
+     background #3c3d3e, chevron 0.8rem square rotated border #ffffff, label centered #ffffff, disabled arrow opacity
+     0.3, disabled stepper opacity 0.5, min width 16rem. */
+.oui-stepper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  box-sizing: border-box;
+  min-width: 16rem;
+  min-height: 3.2rem;
+  font-family: var(--oui-font, sans-serif);
+  color: #ffffff;
+  background-color: #1e1e1f;
+  border-style: solid;
+  border-width: 0.2rem;
+  border-color: #48494a;
+}
+
+.oui-stepper-arrow {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  align-self: stretch;
+  width: 3.2rem;
+}
+
+.oui-stepper-arrow:hover {
+  background-color: #3c3d3e;
+}
+
+.oui-stepper-arrow.disabled,
+.oui-stepper-arrow.disabled:hover {
+  background-color: transparent;
+  opacity: 0.3;
+}
+
+.oui-stepper-glyph {
+  box-sizing: border-box;
+  width: 0.8rem;
+  height: 0.8rem;
+  border-style: solid;
+  border-width: 0 0.2rem 0.2rem 0;
+  border-color: #ffffff;
+}
+
+.oui-stepper-prev .oui-stepper-glyph {
+  transform: rotate(135deg);
+}
+
+.oui-stepper-next .oui-stepper-glyph {
+  transform: rotate(-45deg);
+}
+
+.oui-stepper-current {
+  flex: 1 1 auto;
+  text-align: center;
+}
+
+.oui-stepper.disabled {
+  opacity: 0.5;
+}
