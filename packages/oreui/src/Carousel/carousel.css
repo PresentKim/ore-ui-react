@@ -1,0 +1,107 @@
+/* Values table for the Ore UI carousel.
+   Reused from oreui pagination.css (itself estimated): arrow button 3.2rem square, background #1e1e1f, border
+     0.2rem solid #48494a, hover border #b1b2b5, arrow 0.8rem rotated border #ffffff, disabled opacity 0.4.
+   Estimates (not measured): dot 0.8rem square with gap 0.6rem, dot color #48494a, current dot #3c8527, gap between
+     arrows and viewport 0.8rem, dots row margin-top 0.8rem. */
+.oui-carousel {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.oui-carousel-stage {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.oui-carousel-viewport {
+  flex-grow: 1;
+  flex-shrink: 1;
+  overflow: hidden;
+  margin-left: 0.8rem;
+  margin-right: 0.8rem;
+}
+
+.oui-carousel-track {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
+
+.oui-carousel-slide {
+  flex-grow: 0;
+  flex-shrink: 0;
+  box-sizing: border-box;
+}
+
+.oui-carousel-prev,
+.oui-carousel-next {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  width: 3.2rem;
+  height: 3.2rem;
+  background-color: #1e1e1f;
+  border-style: solid;
+  border-width: 0.2rem;
+  border-color: #48494a;
+}
+
+.oui-carousel-prev:hover,
+.oui-carousel-next:hover {
+  border-color: #b1b2b5;
+}
+
+.oui-carousel-arrow {
+  box-sizing: border-box;
+  width: 0.8rem;
+  height: 0.8rem;
+  border-style: solid;
+  border-width: 0.2rem 0 0 0.2rem;
+  border-color: #ffffff;
+}
+
+.oui-carousel-prev .oui-carousel-arrow {
+  margin-left: 0.3rem;
+  transform: rotate(-45deg);
+}
+
+.oui-carousel-next .oui-carousel-arrow {
+  margin-right: 0.3rem;
+  transform: rotate(135deg);
+}
+
+.oui-carousel-prev.disabled,
+.oui-carousel-next.disabled {
+  opacity: 0.4;
+}
+
+.oui-carousel-prev.disabled:hover,
+.oui-carousel-next.disabled:hover {
+  border-color: #48494a;
+}
+
+.oui-carousel-dots {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin-top: 0.8rem;
+}
+
+.oui-carousel-dot {
+  box-sizing: border-box;
+  width: 0.8rem;
+  height: 0.8rem;
+  margin-left: 0.3rem;
+  margin-right: 0.3rem;
+  background-color: #48494a;
+}
+
+.oui-carousel-dot.on {
+  background-color: #3c8527;
+}

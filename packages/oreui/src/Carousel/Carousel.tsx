@@ -1,0 +1,93 @@
+import { Children } from 'react'
+import { useFacetCallback, useFacetMap, useFacetWrap } from '@react-facet/core'
+import { carouselPageCount, trackOffset, type CarouselProps } from '@ore-ui-react/core/src/carousel'
+import { stepPage } from '@ore-ui-react/core/src/pagination'
+import './carousel.css'
+
+type PageFacet = ReturnType<typeof useFacetWrap<number>>
+
+export const Carousel = ({ children, page, itemsPerPage = 1, loop = false, onChange }: CarouselProps) => {
+  const pageFacet = useFacetWrap(page ?? 1)
+  const items = Children.toArray(children)
+  const pageCount = carouselPageCount(items.length, itemsPerPage)
+  const transform = useFacetMap((current) => trackOffset(current, pageCount), [pageCount], [pageFacet])
+  const dots = Array.from({ length: pageCount }, (_, index) => index + 1)
+
+  return (
+    <fast-div className="oui-carousel">
+      <fast-div className="oui-carousel-stage">
+        <Step direction={-1} pageCount={pageCount} loop={loop} page={pageFacet} onChange={onChange} />
+        <fast-div className="oui-carousel-viewport">
+          <fast-div className="oui-carousel-track" style={{ transform }}>
+            {items.map((item, index) => (
+              <fast-div key={index} className="oui-carousel-slide" style={{ flexBasis: `${100 / itemsPerPage}%` }}>
+                {item}
+              </fast-div>
+            ))}
+          </fast-div>
+        </fast-div>
+        <Step direction={1} pageCount={pageCount} loop={loop} page={pageFacet} onChange={onChange} />
+      </fast-div>
+      <fast-div className="oui-carousel-dots">
+        {dots.map((number) => (
+          <Dot key={number} number={number} page={pageFacet} onChange={onChange} />
+        ))}
+      </fast-div>
+    </fast-div>
+  )
+}
+
+type StepProps = {
+  direction: 1 | -1
+  pageCount: number
+  loop: boolean
+  page: PageFacet
+  onChange?: (page: number) => void
+}
+
+const Step = ({ direction, pageCount, loop, page, onChange }: StepProps) => {
+  const name = direction === 1 ? 'next' : 'prev'
+  const className = useFacetMap(
+    (current) =>
+      `oui-carousel-${name}${stepPage(current, pageCount, direction, loop) === undefined ? ' disabled' : ''}`,
+    [name, pageCount, direction, loop],
+    [page],
+  )
+  const press = useFacetCallback(
+    (current: number) => (event: MouseEvent) => {
+      if (event.button !== 0) return
+      const target = stepPage(current, pageCount, direction, loop)
+      if (target !== undefined) onChange?.(target)
+    },
+    [pageCount, direction, loop, onChange],
+    [page],
+  )
+  return (
+    <fast-div className={className} onMouseDown={press}>
+      <fast-div className="oui-carousel-arrow" />
+    </fast-div>
+  )
+}
+
+type DotProps = {
+  number: number
+  page: PageFacet
+  onChange?: (page: number) => void
+}
+
+const Dot = ({ number, page, onChange }: DotProps) => {
+  const className = useFacetMap(
+    (current) => `oui-carousel-dot${current === number ? ' on' : ''}`,
+    [number],
+    [page],
+  )
+  const press = useFacetCallback(
+    (current: number) => (event: MouseEvent) => {
+      if (event.button !== 0 || current === number) return
+      onChange?.(number)
+    },
+    [number, onChange],
+    [page],
+  )
+  return <fast-div className={className} onMouseDown={press} />
+}
