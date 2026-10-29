@@ -1,0 +1,58 @@
+import { describe, expect, it, vi } from 'vitest'
+import { createFacet } from '@react-facet/core'
+import { act, fireEvent, render } from '@react-facet/dom-fiber-testing-library'
+import { Tab, TabLink, Tabs } from './Tabs'
+
+const setup = (initial = 'a') => {
+  const active = createFacet({ initialValue: initial })
+  const onChange = vi.fn()
+  const view = render(
+    <Tabs active={active} onChange={onChange}>
+      <div>
+        <TabLink id="a">One</TabLink>
+        <TabLink id="b">Two</TabLink>
+        <TabLink id="c" disabled>
+          Three
+        </TabLink>
+      </div>
+      <Tab id="a">Panel A</Tab>
+      <Tab id="b">Panel B</Tab>
+    </Tabs>,
+  )
+  const links = Array.from(view.container.querySelectorAll('.oui-tablink')) as HTMLElement[]
+  return { active, onChange, view, links }
+}
+
+describe('oreui Tabs', () => {
+  it('only_active_panel renders', () => {
+    const { active, view } = setup()
+    expect(view.container.textContent).toContain('Panel A')
+    expect(view.container.textContent).not.toContain('Panel B')
+    act(() => active.set('b'))
+    expect(view.container.textContent).toContain('Panel B')
+    expect(view.container.textContent).not.toContain('Panel A')
+  })
+
+  it('pressing a TabLink calls onChange with its id', () => {
+    const { links, onChange } = setup()
+    fireEvent.mouseDown(links[1], { button: 0 })
+    expect(onChange).toHaveBeenCalledWith('b')
+  })
+
+  it('controlled', () => {
+    const { links, active } = setup()
+    fireEvent.mouseDown(links[1], { button: 0 })
+    expect(links[0].className).toContain('active')
+    expect(links[1].className).not.toContain('active')
+    active.set('b')
+    expect(links[1].className).toContain('active')
+    expect(links[0].className).not.toContain('active')
+  })
+
+  it('disabled link and right button ignored', () => {
+    const { links, onChange } = setup()
+    fireEvent.mouseDown(links[2], { button: 0 })
+    fireEvent.mouseDown(links[1], { button: 2 })
+    expect(onChange).not.toHaveBeenCalled()
+  })
+})

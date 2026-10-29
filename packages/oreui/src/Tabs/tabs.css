@@ -1,0 +1,44 @@
+/* Values table for the Ore UI tabs.
+   Estimates (not read from index-*.css; colors reuse the dark panel tokens of the checkbox and switch):
+     link padding 0.8rem 1.6rem, font size 1.4rem, color #b1b2b5 inactive and #ffffff active, 0.3rem bottom border
+     #3c8527 on the active link and #48494a on the rest, hover color #ffffff, disabled opacity 0.5. */
+.oui-tabs {
+  display: flex;
+  flex-direction: column;
+}
+
+.oui-tablink {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  padding: 0.8rem 1.6rem 0.8rem 1.6rem;
+  border-style: solid;
+  border-width: 0 0 0.3rem 0;
+  border-color: #48494a;
+  color: #b1b2b5;
+  font-family: var(--oui-font, sans-serif);
+  font-size: 1.4rem;
+}
+
+.oui-tablink:hover {
+  color: #ffffff;
+}
+
+.oui-tablink.active {
+  border-color: #3c8527;
+  color: #ffffff;
+}
+
+.oui-tablink.disabled {
+  opacity: 0.5;
+}
+
+.oui-tab {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem 0 0 0;
+  color: #ffffff;
+  font-family: var(--oui-font, sans-serif);
+}

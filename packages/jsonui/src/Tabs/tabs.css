@@ -1,0 +1,44 @@
+/* Values table for the JSON UI tabs.
+   Estimates (not read from bedrock-samples; follows the vanilla button bevel from the jsonui button):
+     inactive link face #757575 with top and left edge #f7f7f7 and bottom and right edge #656465, active link face #c6c6c6,
+     link padding 0.6rem 1.4rem, font size 1.4rem, text #4d4d4d inactive and #ffffff active, disabled opacity 0.5. */
+.jui-tabs {
+  display: flex;
+  flex-direction: column;
+}
+
+.jui-tablink {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  padding: 0.6rem 1.4rem 0.6rem 1.4rem;
+  border-style: solid;
+  border-width: 0.2rem;
+  border-top-color: #f7f7f7;
+  border-left-color: #f7f7f7;
+  border-bottom-color: #656465;
+  border-right-color: #656465;
+  background-color: #757575;
+  color: #4d4d4d;
+  font-family: var(--oui-font, sans-serif);
+  font-size: 1.4rem;
+}
+
+.jui-tablink.active {
+  background-color: #c6c6c6;
+  color: #ffffff;
+}
+
+.jui-tablink.disabled {
+  opacity: 0.5;
+}
+
+.jui-tab {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem 0 0 0;
+  color: #ffffff;
+  font-family: var(--oui-font, sans-serif);
+}
