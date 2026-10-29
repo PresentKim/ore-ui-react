@@ -1,0 +1,104 @@
+/* Values table for the JSON UI color picker.
+   Reused from the JSON UI slider (packages/jsonui/src/Slider/slider.css): frame border 0.2rem #000000,
+     handle face #c6c6c6 with border #131313, hover border #ffffff.
+   Estimates (no color picker exists in the pack): picker width 24rem, area height 16rem, hue strip height 3.2rem,
+     handle size 1.6rem, hue handle width 2rem with border 0.4rem, swatch size 3.2rem, hex field background #404040
+     with text #ffffff 1.4rem. */
+.jui-colorpicker {
+  display: flex;
+  flex-direction: column;
+  width: 24rem;
+}
+
+.jui-colorpicker-area {
+  position: relative;
+  box-sizing: border-box;
+  width: 100%;
+  height: 16rem;
+  border-style: solid;
+  border-width: 0.2rem;
+  border-color: #000000;
+  background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0), #000000),
+    linear-gradient(to right, #ffffff, rgba(255, 255, 255, 0));
+}
+
+.jui-colorpicker-hue {
+  position: relative;
+  box-sizing: border-box;
+  width: 100%;
+  height: 3.2rem;
+  margin-top: 1rem;
+  border-style: solid;
+  border-width: 0.2rem;
+  border-color: #000000;
+  background-image: linear-gradient(
+    to right,
+    #ff0000,
+    #ffff00,
+    #00ff00,
+    #00ffff,
+    #0000ff,
+    #ff00ff,
+    #ff0000
+  );
+}
+
+.jui-colorpicker-handle {
+  position: absolute;
+  width: 1.6rem;
+  height: 1.6rem;
+  margin-left: -0.8rem;
+  margin-top: -0.8rem;
+  box-sizing: border-box;
+  border-style: solid;
+  border-width: 0.4rem;
+  border-color: #131313;
+  background-color: #c6c6c6;
+}
+
+.jui-colorpicker-hue-handle {
+  position: absolute;
+  top: 0;
+  width: 2rem;
+  height: 100%;
+  margin-left: -1rem;
+  box-sizing: border-box;
+  border-style: solid;
+  border-width: 0.4rem;
+  border-color: #131313;
+  background-color: #c6c6c6;
+}
+
+.jui-colorpicker-area:hover .jui-colorpicker-handle,
+.jui-colorpicker-hue:hover .jui-colorpicker-hue-handle {
+  border-color: #ffffff;
+}
+
+.jui-colorpicker-preview {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.jui-colorpicker-swatch {
+  width: 3.2rem;
+  height: 3.2rem;
+  box-sizing: border-box;
+  border-style: solid;
+  border-width: 0.2rem;
+  border-color: #000000;
+}
+
+.jui-colorpicker-hex {
+  flex-grow: 1;
+  margin-left: 1rem;
+  height: 3.2rem;
+  box-sizing: border-box;
+  border-style: solid;
+  border-width: 0.2rem;
+  border-color: #000000;
+  background-color: #404040;
+  color: #ffffff;
+  font-size: 1.4rem;
+}
