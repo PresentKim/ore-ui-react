@@ -1,0 +1,92 @@
+/* Vanilla Ore UI button. Values from hbui/index-aa96eedc6c94fe36a35b.css and the theme tables in index-018f0e6740b840233f22.js.
+   Measured: border 0.2rem #000000; secondary face #d0d1d4, hover #b1b2b5; bevel top #e6e8eb, specular #ffffff;
+   bottom shadow bar #58585a 0.4rem; text #1e1e1f; primary face #3c8527.
+   Estimates (not found in the sources): danger face #ff1313 hover #c80f0f, pressed offset 0.2rem, pressed darkening,
+   disabled opacity 0.5, padding, min height, label size. */
+.oui-button {
+  position: relative;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  min-height: 3.2rem;
+  padding: 0.4rem 1.6rem 0.8rem 1.6rem;
+  border-style: solid;
+  border-width: 0.2rem;
+  border-color: #000000;
+  background-color: #d0d1d4;
+  color: #1e1e1f;
+  font-family: var(--oui-font, sans-serif);
+  font-size: 1.4rem;
+}
+
+.oui-button::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 0.2rem;
+  background-color: #ffffff;
+}
+
+.oui-button::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 0.4rem;
+  background-color: #58585a;
+}
+
+.oui-button-label {
+  position: relative;
+}
+
+.oui-button-secondary:hover {
+  background-color: #b1b2b5;
+}
+
+.oui-button-primary {
+  background-color: #3c8527;
+  color: #ffffff;
+}
+
+.oui-button-primary:hover {
+  background-color: #2f6a1f;
+}
+
+.oui-button-danger {
+  background-color: #ff1313;
+  color: #ffffff;
+}
+
+.oui-button-danger:hover {
+  background-color: #c80f0f;
+}
+
+.oui-button:active {
+  padding-top: 0.6rem;
+  padding-bottom: 0.6rem;
+}
+
+.oui-button:active::after {
+  height: 0.2rem;
+}
+
+.oui-button.disabled,
+.oui-button.disabled:hover {
+  opacity: 0.5;
+  background-color: #8c8d90;
+}
+
+.oui-button.disabled:active {
+  padding-top: 0.4rem;
+  padding-bottom: 0.8rem;
+}
+
+.oui-button.disabled:active::after {
+  height: 0.4rem;
+}

@@ -1,0 +1,61 @@
+/* Values table for the Ore UI checkbox.
+   Found in C:\XboxGames\Minecraft for Windows\Content\data\gui\dist\hbui\index-*.css and index-*.js (Checkbox and its box component):
+     box size 2.4rem x 2.4rem, border 0.2rem solid, flex 0 0 auto, centered content, checked role primary, unchecked role neutral50,
+     disabled cursor default, row layout with a 2 unit gap spacer between the box and the label.
+   Estimates (colors come from theme role tokens, the checkmark is a PNG in the bundle; colors borrowed from the
+   vanilla switch theme in ore-ui-loading/samples/oui-react/src/switch.css):
+     on background and border #3c8527, off background #1e1e1f, off border #48494a, checkmark white 0.8rem x 1.4rem
+     with 0.3rem borders, label color #ffffff, gap 0.8rem, disabled opacity 0.5. */
+.oui-checkbox {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.oui-checkbox-box {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  box-sizing: border-box;
+  width: 2.4rem;
+  height: 2.4rem;
+  border-style: solid;
+  border-width: 0.2rem;
+}
+
+.oui-checkbox-box.on {
+  background-color: #3c8527;
+  border-color: #3c8527;
+}
+
+.oui-checkbox-box.off {
+  background-color: #1e1e1f;
+  border-color: #48494a;
+}
+
+.oui-checkbox:hover .oui-checkbox-box.off {
+  border-color: #b1b2b5;
+}
+
+.oui-checkbox-mark {
+  box-sizing: border-box;
+  width: 0.8rem;
+  height: 1.4rem;
+  margin-bottom: 0.2rem;
+  border-style: solid;
+  border-width: 0 0.3rem 0.3rem 0;
+  border-color: #ffffff;
+  transform: rotate(45deg);
+}
+
+.oui-checkbox-label {
+  margin-left: 0.8rem;
+  color: #ffffff;
+  font-family: var(--oui-font, sans-serif);
+}
+
+.oui-checkbox.disabled {
+  opacity: 0.5;
+}
