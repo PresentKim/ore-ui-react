@@ -1,0 +1,61 @@
+/* Values table for the JSON UI slider.
+   Found in D:\project\minecraft-bedrock\bedrock-samples\resource_pack:
+     ui/ui_common.json: slider_box size 10 x 16 (gui px), slider_bar_default border color from
+       ui/_global_variables.json $slider_default_border_color #000000, hover #ffffff.
+     textures/ui/slider_background.png #404040 (nine-slice 1 of 3x3); slider_progress.png #808080 (nine-slice 1 of 3x3);
+     slider_border.png white 1px frame tinted by the border color;
+     slider_button_default.png border #131313, face #c6c6c6 (nine-slice 2 of 6x6);
+     slider_button_hover.png border #ffffff, face #43a01c.
+   Estimates (not in those files): 1 gui px = 0.2rem, bar height 16 gui px = 3.2rem, disabled opacity 0.5. */
+.jui-slider {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 3.2rem;
+}
+
+.jui-slider-track {
+  position: relative;
+  box-sizing: border-box;
+  width: 100%;
+  height: 3.2rem;
+  border-style: solid;
+  border-width: 0.2rem;
+  border-color: #000000;
+  background-color: #404040;
+}
+
+.jui-slider:hover .jui-slider-track {
+  border-color: #ffffff;
+}
+
+.jui-slider-fill {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  background-color: #808080;
+}
+
+.jui-slider-thumb {
+  position: absolute;
+  top: 0;
+  width: 2rem;
+  height: 100%;
+  margin-left: -1rem;
+  box-sizing: border-box;
+  border-style: solid;
+  border-width: 0.4rem;
+  border-color: #131313;
+  background-color: #c6c6c6;
+}
+
+.jui-slider:hover .jui-slider-thumb {
+  border-color: #ffffff;
+  background-color: #43a01c;
+}
+
+.jui-slider.disabled {
+  opacity: 0.5;
+}

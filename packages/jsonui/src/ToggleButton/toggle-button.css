@@ -1,0 +1,105 @@
+/* The vanilla JSON UI settings toggle for ToggleButton.tsx.
+   Size: 30x16 px from bedrock-samples resource_pack/ui/settings_sections/settings_common.json
+   (option_toggle_state_template), drawn here at 1px = 0.2rem. Textures read for colours only:
+   resource_pack/textures/ui/toggle_off.png, toggle_on.png, toggle_off_hover.png, toggle_on_hover.png.
+   Colours sampled from those textures:
+     border #000000, off track #404040, on track #7f7f7f (hover #4e8836), off hover track #025f00,
+     knob #c6c6c6 (hover #43a01c), knob highlight #ffffff (hover #37d61e), knob shade #585658 (hover #037300).
+   Estimates: the track occupies the left or right two thirds (4rem), the knob is 2.4rem wide, and disabled
+   opacity is 0.5; exact pixel edges of the textures were not measured. */
+.jui-toggle-button {
+  position: relative;
+  width: 6rem;
+  height: 3.2rem;
+}
+
+.jui-toggle-button-track {
+  position: absolute;
+  top: 0.2rem;
+  bottom: 0.2rem;
+  width: 4rem;
+  box-sizing: border-box;
+  border-style: solid;
+  border-width: 0.2rem;
+  border-color: #000000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.jui-toggle-button.off .jui-toggle-button-track {
+  left: 0;
+  background-color: #404040;
+}
+
+.jui-toggle-button.on .jui-toggle-button-track {
+  right: 0;
+  background-color: #7f7f7f;
+}
+
+.jui-toggle-button-marker {
+  width: 0.2rem;
+  height: 1.2rem;
+  background-color: #404040;
+}
+
+.jui-toggle-button-knob {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 2.4rem;
+  box-sizing: border-box;
+  border-style: solid;
+  border-width: 0.2rem;
+  border-color: #000000;
+  background-color: #c6c6c6;
+  display: flex;
+  flex-direction: column;
+}
+
+.jui-toggle-button.off .jui-toggle-button-knob {
+  left: 0;
+}
+
+.jui-toggle-button.on .jui-toggle-button-knob {
+  right: 0;
+}
+
+.jui-toggle-button-knob-face {
+  flex: 1;
+  border-style: solid;
+  border-width: 0;
+  border-top-width: 0.2rem;
+  border-left-width: 0.2rem;
+  border-color: #ffffff;
+}
+
+.jui-toggle-button-knob-shade {
+  height: 0.2rem;
+  background-color: #585658;
+}
+
+.jui-toggle-button:hover.on .jui-toggle-button-track {
+  background-color: #4e8836;
+}
+
+.jui-toggle-button:hover.off .jui-toggle-button-track {
+  background-color: #025f00;
+}
+
+.jui-toggle-button:hover .jui-toggle-button-knob {
+  background-color: #43a01c;
+}
+
+.jui-toggle-button:hover .jui-toggle-button-knob-face {
+  border-color: #37d61e;
+}
+
+.jui-toggle-button:hover .jui-toggle-button-knob-shade {
+  background-color: #037300;
+}
+
+.jui-toggle-button.disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
