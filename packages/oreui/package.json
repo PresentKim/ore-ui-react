@@ -1,0 +1,11 @@
+{
+  "name": "@ore-ui-react/oreui",
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "dependencies": {
+    "@ore-ui-react/core": "*",
+    "react": "^18.3.1",
+    "@react-facet/core": "18.6.0",
+    "@react-facet/dom-fiber": "18.6.0"
+  }
+}

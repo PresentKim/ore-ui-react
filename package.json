@@ -1,0 +1,23 @@
+{
+  "name": "ore-ui-react",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "test": "vitest run",
+    "typecheck": "tsc -p tsconfig.json",
+    "dev": "npm run dev -w @ore-ui-react/docs",
+    "build:docs": "npm run build -w @ore-ui-react/docs"
+  },
+  "devDependencies": {
+    "@react-facet/dom-fiber-testing-library": "18.6.0",
+    "@types/react": "^18.3.12",
+    "jsdom": "^30.1.3",
+    "typescript": "^5.6.3",
+    "vite": "^8.3.5",
+    "vitest": "^5.0.5"
+  }
+}

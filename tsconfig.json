@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "target": "es2017",
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "jsx": "react-jsx",
+    "strict": true,
+    "noEmit": true,
+    "lib": ["dom", "es2017"],
+    "types": [],
+    "skipLibCheck": true
+  },
+  "include": ["packages/*/src", "apps/docs/src", "test"]
+}
