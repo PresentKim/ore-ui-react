@@ -1,0 +1,57 @@
+/* Values table for the JSON UI toast.
+   Found in D:\project\minecraft-bedrock\bedrock-samples\resource_pack:
+     textures/ui/greyBorder.png (popup background in ui/toast_screen.json): 1px outer #000000, 2px border #555555,
+       face #212121.
+     ui/_global_variables.json: toast text color 1.0 (#ffffff).
+   Estimates (not in those files): 1 gui px = 0.2rem, host sized 100vw x 100vh with 1.6rem inset, toast min width
+   20rem, padding 1.2rem, gap 0.8rem, font 1.4rem. The frame is a 0.4rem border plus a 0.2rem black box-shadow. */
+.jui-toast-host {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  box-sizing: border-box;
+  padding: 1.6rem;
+  display: flex;
+  flex-direction: column;
+  pointer-events: none;
+  z-index: 200;
+}
+
+.jui-toast-host.top-left,
+.jui-toast-host.top-right {
+  justify-content: flex-start;
+}
+
+.jui-toast-host.bottom-left,
+.jui-toast-host.bottom-right {
+  justify-content: flex-end;
+}
+
+.jui-toast-host.top-left,
+.jui-toast-host.bottom-left {
+  align-items: flex-start;
+}
+
+.jui-toast-host.top-right,
+.jui-toast-host.bottom-right {
+  align-items: flex-end;
+}
+
+.jui-toast {
+  box-sizing: border-box;
+  min-width: 20rem;
+  max-width: 96vw;
+  margin-bottom: 0.8rem;
+  padding: 1.2rem;
+  border-style: solid;
+  border-width: 0.4rem;
+  border-color: #555555;
+  background-color: #212121;
+  box-shadow: 0 0 0 0.2rem #000000;
+  color: #ffffff;
+  font-family: var(--oui-font, sans-serif);
+  font-size: 1.4rem;
+  pointer-events: auto;
+}

@@ -1,0 +1,54 @@
+/* Vanilla Ore UI toast. Colors reuse the measured theme from hbui/index-aa96eedc6c94fe36a35b.css:
+   border #000000, face #d0d1d4, bottom shadow #58585a, text #1e1e1f.
+   Estimates (the bundle has no toast rule): host sized 100vw x 100vh with 1.6rem inset, toast min width 20rem,
+   padding 1.2rem, gap 0.8rem, font 1.4rem. */
+.oui-toast-host {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  box-sizing: border-box;
+  padding: 1.6rem;
+  display: flex;
+  flex-direction: column;
+  pointer-events: none;
+  z-index: 200;
+}
+
+.oui-toast-host.top-left,
+.oui-toast-host.top-right {
+  justify-content: flex-start;
+}
+
+.oui-toast-host.bottom-left,
+.oui-toast-host.bottom-right {
+  justify-content: flex-end;
+}
+
+.oui-toast-host.top-left,
+.oui-toast-host.bottom-left {
+  align-items: flex-start;
+}
+
+.oui-toast-host.top-right,
+.oui-toast-host.bottom-right {
+  align-items: flex-end;
+}
+
+.oui-toast {
+  box-sizing: border-box;
+  min-width: 20rem;
+  max-width: 96vw;
+  margin-bottom: 0.8rem;
+  padding: 1.2rem;
+  border-style: solid;
+  border-width: 0.2rem;
+  border-color: #000000;
+  background-color: #d0d1d4;
+  box-shadow: 0 0.4rem 0 0 #58585a;
+  color: #1e1e1f;
+  font-family: var(--oui-font, sans-serif);
+  font-size: 1.4rem;
+  pointer-events: auto;
+}
