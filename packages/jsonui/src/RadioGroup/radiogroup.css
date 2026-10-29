@@ -1,0 +1,73 @@
+/* Values table for the JSON UI radio group.
+   Found in D:\project\minecraft-bedrock\bedrock-samples\resource_pack:
+     ui/ui_common.json: radio_toggle uses toggle_state_template, size 10 x 10 gui px; unchecked states reuse the
+       checkbox textures, checked states use textures/ui/checkbox_filled, checkbox_filled_hover.
+     textures/ui/checkbox_space.png: 1px frame #000000, face #585658.
+     textures/ui/checkbox_spaceHover.png: 1px frame #ffffff, face #585658.
+     textures/ui/checkbox_filled.png: outer frame #838383, 1px ring #131313, filled square #fef506 with edge #c4bd00.
+     textures/ui/checkbox_filled_hover.png: same with outer frame #fef506.
+   Estimates (not in those files): 1 gui px = 0.2rem, inner fill 1.2rem x 1.2rem inside a 0.2rem #131313 ring,
+     label gap 0.8rem, label color #ffffff, disabled opacity 0.5. */
+.jui-radiogroup {
+  display: flex;
+  flex-direction: column;
+}
+
+.jui-radio {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 0.4rem;
+}
+
+.jui-radio-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  box-sizing: border-box;
+  width: 2rem;
+  height: 2rem;
+  border-style: solid;
+  border-width: 0.2rem;
+  border-color: #000000;
+  background-color: #585658;
+}
+
+.jui-radio:hover .jui-radio-box.off {
+  border-color: #ffffff;
+}
+
+.jui-radio-box.on {
+  border-color: #838383;
+  background-color: #131313;
+}
+
+.jui-radio:hover .jui-radio-box.on {
+  border-color: #fef506;
+}
+
+.jui-radio-fill {
+  display: none;
+  width: 1.2rem;
+  height: 1.2rem;
+  box-sizing: border-box;
+  border-style: solid;
+  border-width: 0.2rem 0rem 0rem 0.2rem;
+  border-color: #c4bd00;
+  background-color: #fef506;
+}
+
+.jui-radio-box.on .jui-radio-fill {
+  display: block;
+}
+
+.jui-radio-label {
+  margin-left: 0.8rem;
+  color: #ffffff;
+  font-family: var(--oui-font, sans-serif);
+}
+
+.jui-radio.disabled {
+  opacity: 0.5;
+}

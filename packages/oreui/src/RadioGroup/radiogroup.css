@@ -1,0 +1,67 @@
+/* Values table for the Ore UI radio group.
+   Found in C:\XboxGames\Minecraft for Windows\Content\data\gui\dist\hbui\index-*.css (RadioBox component):
+     row wrapper min-height 5.6rem, padding 0 0.4rem, align center, cursor pointer, disabled cursor not-allowed;
+     box 2rem x 2rem, border 0.2rem, flex 0 0 auto, rotated 45deg (a diamond), content centered;
+     inner mark 0.8rem x 0.8rem #ffffff; label margin-left 1.6rem.
+   Estimates (colors come from theme role tokens; borrowed from the oreui checkbox): checked background and border
+     #3c8527, unchecked background #1e1e1f, border #48494a, hover border #b1b2b5, label color #ffffff,
+     group item gap 0rem, disabled opacity 0.5. */
+.oui-radiogroup {
+  display: flex;
+  flex-direction: column;
+}
+
+.oui-radio {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  min-height: 5.6rem;
+  padding: 0rem 0.4rem;
+  cursor: pointer;
+  user-select: none;
+}
+
+.oui-radio-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  box-sizing: border-box;
+  width: 2rem;
+  height: 2rem;
+  margin: 0rem 0.2rem;
+  border-style: solid;
+  border-width: 0.2rem;
+  transform: rotate(45deg);
+}
+
+.oui-radio-box.on {
+  background-color: #3c8527;
+  border-color: #3c8527;
+}
+
+.oui-radio-box.off {
+  background-color: #1e1e1f;
+  border-color: #48494a;
+}
+
+.oui-radio:hover .oui-radio-box.off {
+  border-color: #b1b2b5;
+}
+
+.oui-radio-dot {
+  width: 0.8rem;
+  height: 0.8rem;
+  background-color: #ffffff;
+}
+
+.oui-radio-label {
+  margin-left: 1.6rem;
+  color: #ffffff;
+  font-family: var(--oui-font, sans-serif);
+}
+
+.oui-radio.disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
