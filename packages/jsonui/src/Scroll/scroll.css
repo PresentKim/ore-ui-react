@@ -11,6 +11,7 @@
   flex-direction: column;
   flex-grow: 1;
   flex-shrink: 1;
+  min-height: 0;
   overflow: hidden;
 }
 
@@ -19,6 +20,7 @@
   flex-direction: column;
   flex-grow: 1;
   flex-shrink: 1;
+  min-height: 0;
   overflow-y: scroll;
   padding-right: 1.6rem;
 }

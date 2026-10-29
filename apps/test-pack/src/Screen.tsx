@@ -1,72 +1,91 @@
-import { useEffect, useMemo, useState } from 'react'
-import { useFacetMap, useFacetState } from '@react-facet/core'
-import { createToasts } from '@ore-ui-react/core'
+import { useState } from 'react'
+import { Scroll as OreScroll } from '@ore-ui-react/oreui'
+import { Scroll as JsonScroll } from '@ore-ui-react/jsonui'
 import { SizedBox } from '@ore-ui-react/primitives'
-import { Controls } from './Controls'
-import { Media } from './Media'
-import { Stats } from './Stats'
-import { createProbe } from './probe'
-import { SKINS, SKIN_OPTIONS } from './skins'
-import type { SkinName } from './skins'
+import { CATALOG } from '../../docs/src/catalog'
+import type { CatalogEntry } from '../../docs/src/catalog'
+import { DEMOS } from '../../docs/src/demos/index'
 import './test-pack.css'
 
+const READY: CatalogEntry[] = CATALOG.reduce<CatalogEntry[]>(
+  (all, category) => all.concat(category.entries.filter((entry) => entry.id in DEMOS)),
+  [],
+)
+
+type EntryLinkProps = {
+  entry: CatalogEntry
+  active: boolean
+  onSelect: (id: string) => void
+}
+
+const EntryLink = ({ entry, active, onSelect }: EntryLinkProps) => (
+  <div
+    className={active ? 'tp-link active' : 'tp-link'}
+    onMouseDown={(ev) => {
+      if (ev.button !== 0) return
+      onSelect(entry.id)
+    }}
+  >
+    {entry.name}
+  </div>
+)
+
 export const TestScreen = () => {
-  const probe = useMemo(createProbe, [])
-  const toasts = useMemo(createToasts, [])
-  const [skinName, setSkinName] = useState<SkinName>('oreui')
-  const [modalOpen, setModalOpen] = useFacetState(false)
-  const skin = SKINS[skinName]
-  const { Segment, Scroll, Modal, ToastHost, Button } = skin
-
-  useEffect(() => probe.attach(), [probe])
-
-  const display = useFacetMap((shown) => (shown ? 'flex' : 'none'), [], [probe.shown])
-  const badge = useFacetMap(
-    (shown, route) => `debug ${shown ? 'on' : 'off'} | route ${route} | press to ${shown ? 'hide' : 'show'}`,
-    [],
-    [probe.shown, probe.route],
-  )
-  const closeModal = () => setModalOpen(false)
+  const [shown, setShown] = useState(true)
+  const [selected, setSelected] = useState(READY[0].id)
+  const entry = READY.find((e) => e.id === selected) ?? READY[0]
+  const demo = DEMOS[entry.id]
 
   return (
     <div className="tp-root">
-      <fast-div className="tp-overlay" style={{ display }}>
-        <SizedBox className="tp-panel" width={140} height={210} fixed>
-          <div className="tp-title">ore-ui-react test</div>
-          <Segment
-            options={SKIN_OPTIONS}
-            value={skinName}
-            onChange={probe.guard('skin', (value: string) => {
-              setSkinName(value as SkinName)
-              probe.log('skin', value)
-            })}
-          />
-          <Scroll>
-            <Controls skin={skin} probe={probe} toasts={toasts} setModalOpen={setModalOpen} />
-            <Media skin={skin} probe={probe} />
-          </Scroll>
-        </SizedBox>
-        <SizedBox className="tp-panel" width={120} height={210} fixed>
-          <Stats skin={skin} probe={probe} />
-        </SizedBox>
-        <fast-div className="tp-cursor" style={{ left: probe.cursorLeft, top: probe.cursorTop }} />
-      </fast-div>
-      <Modal
-        open={modalOpen}
-        onClose={closeModal}
-        title="Probe modal"
-        actions={<Button onPress={closeModal}>close</Button>}
-      >
-        Modal body
-      </Modal>
-      <ToastHost toasts={toasts} />
+      {shown && (
+        <div className="tp-overlay">
+          <SizedBox className="tp-window" width="94vw" height="88vh" fixed>
+            <div className="tp-sidebar">
+              <div className="tp-title">ore-ui-react</div>
+              <OreScroll>
+                {CATALOG.map((category) => (
+                  <div key={category.id} className="tp-category">
+                    <div className="tp-category-title">{category.title}</div>
+                    {category.entries
+                      .filter((e) => e.id in DEMOS)
+                      .map((e) => (
+                        <EntryLink key={e.id} entry={e} active={e.id === entry.id} onSelect={setSelected} />
+                      ))}
+                  </div>
+                ))}
+              </OreScroll>
+            </div>
+            <div className="tp-main">
+              <div className="tp-heading">{entry.name}</div>
+              <div className="tp-panels">
+                <div className="tp-panel">
+                  <div className="tp-panel-title">Ore UI</div>
+                  <OreScroll key={`ore-${entry.id}`}>
+                    <div className="tp-stage">{demo.oreui()}</div>
+                  </OreScroll>
+                </div>
+                <div className="tp-panel">
+                  <div className="tp-panel-title">JSON UI</div>
+                  <JsonScroll key={`json-${entry.id}`}>
+                    <div className="tp-stage">{demo.jsonui()}</div>
+                  </JsonScroll>
+                </div>
+              </div>
+            </div>
+          </SizedBox>
+        </div>
+      )}
       <div className="tp-badge-row">
-        <fast-div className="tp-badge" onMouseDown={probe.guard('badge', (ev: MouseEvent) => {
-            ev.stopPropagation()
-            probe.toggleShown()
-          })}>
-          <fast-text text={badge} />
-        </fast-div>
+        <div
+          className="tp-badge"
+          onMouseDown={(ev) => {
+            if (ev.button !== 0) return
+            setShown(!shown)
+          }}
+        >
+          {shown ? 'ore-ui-react gallery: press to hide' : 'ore-ui-react gallery: press to show'}
+        </div>
       </div>
     </div>
   )

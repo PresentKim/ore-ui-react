@@ -1,104 +1,43 @@
-import { afterEach, describe, expect, it, vi } from 'vitest'
+import { describe, expect, it } from 'vitest'
 import { act, render } from '@react-facet/dom-fiber-testing-library'
 import { TestScreen } from './Screen'
+import { DEMOS } from '../../docs/src/demos/index'
 
 const press = (element: Element) =>
   act(() => {
     element.dispatchEvent(new MouseEvent('mousedown', { bubbles: true, button: 0 }))
   })
 
-const findByText = (container: Element, selector: string, text: string) =>
-  Array.from(container.querySelectorAll(selector)).find((element) => element.textContent === text) as Element
-
-const classTokens = (container: Element) => {
-  const tokens = new Set<string>()
-  container.querySelectorAll('[class]').forEach((element) => {
-    element.getAttribute('class')?.split(/\s+/).forEach((token) => tokens.add(token))
-  })
-  return Array.from(tokens)
-}
-
-afterEach(() => {
-  vi.restoreAllMocks()
-})
+const linkNamed = (container: Element, name: string) =>
+  Array.from(container.querySelectorAll('.tp-link')).find((element) => element.textContent === name) as Element
 
 describe('TestScreen', () => {
-  it('renders the panels and the badge', () => {
+  it('lists every demo in the sidebar', () => {
     const { container } = render(<TestScreen />)
-    const text = container.textContent ?? ''
-    expect(text).toContain('debug on | route')
-    expect(text).toContain('Page')
-    expect(text).toContain('Event counts')
-    expect(text).toContain('beep (audio)')
+    expect(container.querySelectorAll('.tp-link')).toHaveLength(Object.keys(DEMOS).length)
   })
 
-  it('increments the counter on +1 press', () => {
+  it('shows the selected component in both skins', () => {
     const { container } = render(<TestScreen />)
-    const counter = container.querySelector('.tp-counter') as Element
-    expect(counter.textContent).toBe('0')
-    press(findByText(container, '.oui-button', '+1'))
-    expect(counter.textContent).toBe('1')
+    press(linkNamed(container, 'Dropdown'))
+    expect(container.querySelector('.tp-heading')?.textContent).toBe('Dropdown')
+    expect(container.querySelector('.oui-dropdown')).not.toBeNull()
+    expect(container.querySelector('.jui-dropdown')).not.toBeNull()
   })
 
-  it('swaps oui- for jui- classes with the skin switch', () => {
+  it('renders every demo without throwing', () => {
     const { container } = render(<TestScreen />)
-    expect(classTokens(container).some((token) => token.startsWith('oui-'))).toBe(true)
-    expect(classTokens(container).some((token) => token.startsWith('jui-'))).toBe(false)
-    press(findByText(container, '.oui-segment-button', 'JSON UI'))
-    expect(classTokens(container).some((token) => token.startsWith('oui-'))).toBe(false)
-    expect(classTokens(container).some((token) => token.startsWith('jui-'))).toBe(true)
+    Array.from(container.querySelectorAll('.tp-link')).forEach((link) => {
+      press(link)
+      expect(container.querySelector('.tp-link.active')?.textContent).toBe(link.textContent)
+    })
   })
 
-  it('adds a box per press and wraps after ten', () => {
-    const { container } = render(<TestScreen />)
-    const addBox = findByText(container, '.oui-button', 'add box')
-    for (let i = 0; i < 3; i++) press(addBox)
-    expect(container.querySelectorAll('.tp-box')).toHaveLength(3)
-    for (let i = 0; i < 8; i++) press(addBox)
-    expect(container.querySelectorAll('.tp-box')).toHaveLength(1)
-  })
-
-  it('recolors the panel borders', () => {
-    const { container } = render(<TestScreen />)
-    press(findByText(container, '.oui-button', 'random color'))
-    const panel = container.querySelector('.tp-panel') as HTMLElement
-    expect(panel.style.borderColor).toMatch(/^rgb\(/)
-  })
-
-  it('toggles the badge on press', () => {
+  it('hides and shows the gallery from the badge', () => {
     const { container } = render(<TestScreen />)
     press(container.querySelector('.tp-badge') as Element)
-    expect(container.querySelector('.tp-badge')?.textContent).toContain('debug off')
-  })
-
-  it('removes document and window listeners on unmount', () => {
-    const added: Array<[EventTarget, string, unknown]> = []
-    const removed: Array<[EventTarget, string, unknown]> = []
-    for (const target of [document, window]) {
-      const add = target.addEventListener.bind(target)
-      const remove = target.removeEventListener.bind(target)
-      vi.spyOn(target, 'addEventListener').mockImplementation((type: string, listener: any, options?: any) => {
-        added.push([target, type, listener])
-        add(type, listener, options)
-      })
-      vi.spyOn(target, 'removeEventListener').mockImplementation((type: string, listener: any, options?: any) => {
-        removed.push([target, type, listener])
-        remove(type, listener, options)
-      })
-    }
-    const { unmount } = render(<TestScreen />)
-    expect(added.length).toBeGreaterThan(10)
-    unmount()
-    for (const entry of added) {
-      expect(removed.some((other) => other[0] === entry[0] && other[1] === entry[1] && other[2] === entry[2])).toBe(true)
-    }
-  })
-
-  it('restores console.error on unmount', () => {
-    const original = console.error
-    const { unmount } = render(<TestScreen />)
-    expect(console.error).not.toBe(original)
-    unmount()
-    expect(console.error).toBe(original)
+    expect(container.querySelector('.tp-window')).toBeNull()
+    press(container.querySelector('.tp-badge') as Element)
+    expect(container.querySelector('.tp-window')).not.toBeNull()
   })
 })

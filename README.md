@@ -83,7 +83,7 @@ npm run dev
 
 ## Test pack
 
-`apps/test-pack` is a resource pack that replaces `gameplay.html` with a probe screen built from these components. It has the controls, media, input and engine probes of a debug overlay, and a switch between the Ore UI and JSON UI skins.
+`apps/test-pack` is a resource pack that replaces `gameplay.html` with an in-game gallery of every component: the docs demos, listed in a sidebar, with the Ore UI and JSON UI skins side by side. A badge at the bottom hides and shows the gallery.
 
 ```
 npm run build -w @ore-ui-react/test-pack
