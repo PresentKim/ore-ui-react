@@ -1,0 +1,80 @@
+/* Values table for the JSON UI rounded button.
+   Vanilla JSON UI has no rounded button, so the corners are drawn pixel-art style: the top and bottom bevel rows
+   span the full width and the side bars are two box-shadows that start one bevel row lower and end one row higher,
+   which cuts one gui pixel (0.2rem) off each corner.
+   Colors are the light button from the foundation button (bedrock-samples resource_pack):
+     textures/ui/button_borderless_light.png face #c6c6c6, top and left #f7f7f7, bottom and right #656465;
+     button_borderless_lighthover.png hover face #218306, top and left #17cd07, bottom and right #004e00;
+     textures/ui/disabledButtonNoBorder.png #757575; ui/_global_variables.json text #4d4d4d, hover #ffffff.
+   Estimates: min heights 3.2rem, 4rem, 4.8rem; paddings; font sizes 1.2rem, 1.4rem, 1.6rem; pressed swaps the bevel. */
+.jui-roundedbutton {
+  position: relative;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin: 0 0.2rem;
+  border-style: solid;
+  border-width: 0.2rem 0 0.2rem 0;
+  border-top-color: #f7f7f7;
+  border-bottom-color: #656465;
+  background-color: #c6c6c6;
+  box-shadow:
+    -0.4rem 0 0 -0.2rem #f7f7f7,
+    0.4rem 0 0 -0.2rem #656465;
+  color: #4d4d4d;
+  font-family: var(--oui-font, sans-serif);
+}
+
+.jui-roundedbutton-label {
+  position: relative;
+}
+
+.jui-roundedbutton-small {
+  min-height: 3.2rem;
+  padding: 0.2rem 1.2rem;
+  font-size: 1.2rem;
+}
+
+.jui-roundedbutton-medium {
+  min-height: 4rem;
+  padding: 0.4rem 1.6rem;
+  font-size: 1.4rem;
+}
+
+.jui-roundedbutton-large {
+  min-height: 4.8rem;
+  padding: 0.6rem 2.4rem;
+  font-size: 1.6rem;
+}
+
+.jui-roundedbutton:hover {
+  background-color: #218306;
+  border-top-color: #17cd07;
+  border-bottom-color: #004e00;
+  box-shadow:
+    -0.4rem 0 0 -0.2rem #17cd07,
+    0.4rem 0 0 -0.2rem #004e00;
+  color: #ffffff;
+}
+
+.jui-roundedbutton:active {
+  border-top-color: #004e00;
+  border-bottom-color: #17cd07;
+  box-shadow:
+    -0.4rem 0 0 -0.2rem #004e00,
+    0.4rem 0 0 -0.2rem #17cd07;
+}
+
+.jui-roundedbutton.disabled,
+.jui-roundedbutton.disabled:hover,
+.jui-roundedbutton.disabled:active {
+  background-color: #757575;
+  border-top-color: #f7f7f7;
+  border-bottom-color: #656465;
+  box-shadow:
+    -0.4rem 0 0 -0.2rem #f7f7f7,
+    0.4rem 0 0 -0.2rem #656465;
+  color: #4d4d4d;
+}

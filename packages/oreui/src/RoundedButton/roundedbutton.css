@@ -1,0 +1,81 @@
+/* Rounded Ore UI button. Colors reuse the vanilla secondary button (hbui/index-aa96eedc6c94fe36a35b.css):
+   border 0.2rem #000000, face #d0d1d4, hover #b1b2b5, bottom shadow bar #58585a 0.4rem, text #1e1e1f.
+   The bundle CSS has no border-radius rule at all, so every radius is an estimate:
+   small 1.2rem, medium 1.6rem, large 2rem (pill, half the min height).
+   Other estimates: min heights 2.4rem, 3.2rem, 4rem; paddings; pressed offset 0.2rem; disabled opacity 0.5. */
+.oui-roundedbutton {
+  position: relative;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-style: solid;
+  border-width: 0.2rem;
+  border-color: #000000;
+  background-color: #d0d1d4;
+  color: #1e1e1f;
+  font-family: var(--oui-font, sans-serif);
+}
+
+.oui-roundedbutton::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 0.4rem;
+  background-color: #58585a;
+}
+
+.oui-roundedbutton-label {
+  position: relative;
+}
+
+.oui-roundedbutton-small {
+  min-height: 2.4rem;
+  padding: 0.2rem 1.2rem 0.6rem 1.2rem;
+  border-radius: 1.2rem;
+  font-size: 1.2rem;
+}
+
+.oui-roundedbutton-medium {
+  min-height: 3.2rem;
+  padding: 0.4rem 1.6rem 0.8rem 1.6rem;
+  border-radius: 1.6rem;
+  font-size: 1.4rem;
+}
+
+.oui-roundedbutton-large {
+  min-height: 4rem;
+  padding: 0.6rem 2.4rem 1rem 2.4rem;
+  border-radius: 2rem;
+  font-size: 1.6rem;
+}
+
+.oui-roundedbutton:hover {
+  background-color: #b1b2b5;
+}
+
+.oui-roundedbutton:active::after {
+  height: 0.2rem;
+}
+
+.oui-roundedbutton:active .oui-roundedbutton-label {
+  top: 0.2rem;
+}
+
+.oui-roundedbutton.disabled,
+.oui-roundedbutton.disabled:hover {
+  opacity: 0.5;
+  background-color: #8c8d90;
+}
+
+.oui-roundedbutton.disabled:active::after {
+  height: 0.4rem;
+}
+
+.oui-roundedbutton.disabled:active .oui-roundedbutton-label {
+  top: 0;
+}
