@@ -1,0 +1,48 @@
+/* Values table for the JSON UI segment.
+   Found in D:\project\minecraft-bedrock\bedrock-samples\resource_pack (same tables as packages/jsonui/src/Button/button.css):
+     textures/ui/button_borderless_light.png: face #c6c6c6, top and left edge #f7f7f7, bottom and right edge #656465.
+     textures/ui/button_borderless_lighthover.png: face #218306, top and left #17cd07, bottom and right #004e00.
+     ui/_global_variables.json: light button text 0.3 (#4d4d4d), hover text 1.0 (#ffffff).
+   Estimates (vanilla has no segment control; the active button borrows the hover texture): joined row, min height 4rem,
+     padding 0.4rem 0.8rem, 0.2rem borders, font size 1.4rem, disabled opacity 0.5. */
+.jui-segment {
+  display: flex;
+  flex-direction: row;
+}
+
+.jui-segment-button {
+  box-sizing: border-box;
+  display: flex;
+  flex: 1 1 0rem;
+  align-items: center;
+  justify-content: center;
+  min-height: 4rem;
+  padding: 0.4rem 0.8rem;
+  border-style: solid;
+  border-width: 0.2rem;
+  border-top-color: #f7f7f7;
+  border-left-color: #f7f7f7;
+  border-bottom-color: #656465;
+  border-right-color: #656465;
+  background-color: #c6c6c6;
+  color: #4d4d4d;
+  font-family: var(--oui-font, sans-serif);
+  font-size: 1.4rem;
+  cursor: pointer;
+  user-select: none;
+}
+
+.jui-segment-button:hover,
+.jui-segment-button.active {
+  border-top-color: #17cd07;
+  border-left-color: #17cd07;
+  border-bottom-color: #004e00;
+  border-right-color: #004e00;
+  background-color: #218306;
+  color: #ffffff;
+}
+
+.jui-segment-button.disabled {
+  cursor: default;
+  opacity: 0.5;
+}

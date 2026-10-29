@@ -1,0 +1,49 @@
+/* Values table for the Ore UI segment.
+   The Ore UI bundle (hbui/index-aa96eedc6c94fe36a35b.css) has no segment control; the look reuses the measured
+   oreui button values (packages/oreui/src/Button/button.css):
+     border 0.2rem #000000; inactive face #d0d1d4, hover #b1b2b5; text #1e1e1f; active face #3c8527.
+   Estimates (not found in the sources): buttons joined in a row with the shared border overlapped by 0.2rem,
+     min height 3.2rem, padding 0.4rem 1.6rem, active text #ffffff, font size 1.4rem, disabled opacity 0.5. */
+.oui-segment {
+  display: flex;
+  flex-direction: row;
+}
+
+.oui-segment-button {
+  box-sizing: border-box;
+  display: flex;
+  flex: 1 1 0rem;
+  align-items: center;
+  justify-content: center;
+  min-height: 3.2rem;
+  padding: 0.4rem 1.6rem;
+  margin-left: -0.2rem;
+  border-style: solid;
+  border-width: 0.2rem;
+  border-color: #000000;
+  background-color: #d0d1d4;
+  color: #1e1e1f;
+  font-family: var(--oui-font, sans-serif);
+  font-size: 1.4rem;
+  cursor: pointer;
+  user-select: none;
+}
+
+.oui-segment-button:first-child {
+  margin-left: 0rem;
+}
+
+.oui-segment-button:hover {
+  background-color: #b1b2b5;
+}
+
+.oui-segment-button.active,
+.oui-segment-button.active:hover {
+  background-color: #3c8527;
+  color: #ffffff;
+}
+
+.oui-segment-button.disabled {
+  cursor: default;
+  opacity: 0.5;
+}
