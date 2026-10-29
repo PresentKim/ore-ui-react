@@ -83,11 +83,11 @@ flowchart LR
   T1 --> T2
   T1 --> T3
   T1 --> T4
-  T1 --> T5
+  T5
   T1 --> T6
   T1 --> T7
   T1 --> T8
-  T1 --> T9
+  T9
   T2 --> T11
   T3 --> T11
   T4 --> T11
@@ -98,6 +98,35 @@ flowchart LR
   T9 --> T11
   T10 --> T11
 ```
+
+```mermaid
+%% schedule
+gantt
+  title Predicted schedule (mm:ss)
+  dateFormat X
+  axisFormat %M:%S
+  section lane 1
+  T10 docs shell :t10, 0, 147s
+  T11 skin exports  demos  readme :t11, 259, 179s
+  section lane 2
+  T1 core contracts and behavior :t1, 0, 132s
+  T4 oreui ToggleButton :t4, 132, 127s
+  section lane 3
+  T5 oreui Slider :t5, 0, 113s
+  T8 jsonui ToggleButton :t8, 132, 107s
+  section lane 4
+  T9 jsonui Slider :t9, 0, 113s
+  T2 oreui Button :t2, 132, 106s
+  section lane 5
+  T0 workspace skeleton :t0, 0, 95s
+  T3 oreui Checkbox :t3, 132, 106s
+  section lane 6
+  T6 jsonui Button :t6, 132, 106s
+  section lane 7
+  T7 jsonui Checkbox :t7, 132, 106s
+```
+
+critical path: T1 → T4 → T11 (7.3 min) · peak width 7 · predicted build 7.3 min · predicted total ≈ 10.8 min (target ✓)
 
 Ruling: edges T1 -> T2..T9 stay (because component tests execute the real `usePress` hook; a fake hook would test nothing).
 
@@ -147,7 +176,6 @@ Shared for T2-T9: consume the matching props type and `usePress`; read look valu
 **LOC owned:** 130
 **Tests:** fast
 **Model:** sonnet
-**Consumes:** core.ButtonProps (T1) · core.usePress(onPress?: () => void, disabled?: FacetProp<boolean>) -> (event: MouseEvent) => void (T1)
 **Produces:** oreui.Button(props: ButtonProps) -> JSX.Element
 **Review Focus:** `disabled_facet_flip`: class `disabled` appears after `disabled.set(true)` and press is ignored; `right_click_ignored`
 **Test code:** renders children text; root has class `oui-button oui-button-secondary` by default and `oui-button-primary` for `variant="primary"`; mouseDown calls onPress once; disabled true ignores it.
@@ -160,7 +188,6 @@ Shared for T2-T9: consume the matching props type and `usePress`; read look valu
 **LOC owned:** 130
 **Tests:** fast
 **Model:** sonnet
-**Consumes:** core.CheckboxProps (T1) · core.usePress(onPress?: () => void, disabled?: FacetProp<boolean>) -> (event: MouseEvent) => void (T1)
 **Produces:** oreui.Checkbox(props: CheckboxProps) -> JSX.Element
 **Review Focus:** `controlled`: press with checked false calls onChange(true) and the box keeps class `off` until the facet is set; `disabled_facet_flip`
 **Test code:** class `on` when checked true, `off` when false; label text rendered; mouseDown calls onChange(!checked); disabled ignores.
@@ -172,7 +199,6 @@ Shared for T2-T9: consume the matching props type and `usePress`; read look valu
 **LOC owned:** 290
 **Tests:** fast
 **Model:** sonnet
-**Consumes:** core.ToggleButtonProps (T1) · core.usePress(onPress?: () => void, disabled?: FacetProp<boolean>) -> (event: MouseEvent) => void (T1)
 **Produces:** oreui.ToggleButton(props: ToggleButtonProps) -> JSX.Element
 **Review Focus:** `controlled`; `slide_only_on_press`: thumb gets `to-on` after a press, plain `on` after an outside `value.set(true)`
 **Test code:** thumb class `on`/`off` follows value; press calls onChange(!value); disabled ignores; animationend clears `to-on`.
@@ -201,7 +227,6 @@ App type: web UI components. Categories: state, protocol.
 **LOC owned:** 130
 **Tests:** fast
 **Model:** sonnet
-**Consumes:** core.ButtonProps (T1) · core.usePress(onPress?: () => void, disabled?: FacetProp<boolean>) -> (event: MouseEvent) => void (T1)
 **Produces:** jsonui.Button(props: ButtonProps) -> JSX.Element
 **Review Focus:** `disabled_facet_flip`; `right_click_ignored`
 **Test code:** same cases as T2 with prefix `jui-button`.
@@ -214,7 +239,6 @@ App type: web UI components. Categories: state, protocol.
 **LOC owned:** 130
 **Tests:** fast
 **Model:** sonnet
-**Consumes:** core.CheckboxProps (T1) · core.usePress(onPress?: () => void, disabled?: FacetProp<boolean>) -> (event: MouseEvent) => void (T1)
 **Produces:** jsonui.Checkbox(props: CheckboxProps) -> JSX.Element
 **Review Focus:** `controlled`; `disabled_facet_flip`
 **Test code:** same cases as T3 with prefix `jui-checkbox`.
@@ -226,7 +250,6 @@ App type: web UI components. Categories: state, protocol.
 **LOC owned:** 140
 **Tests:** fast
 **Model:** sonnet
-**Consumes:** core.ToggleButtonProps (T1) · core.usePress(onPress?: () => void, disabled?: FacetProp<boolean>) -> (event: MouseEvent) => void (T1)
 **Produces:** jsonui.ToggleButton(props: ToggleButtonProps) -> JSX.Element
 **Review Focus:** `controlled`; `disabled_facet_flip`
 **Test code:** class `on`/`off` follows value; press calls onChange(!value); disabled ignores.
