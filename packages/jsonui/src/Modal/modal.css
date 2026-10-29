@@ -1,0 +1,63 @@
+/* Values table for the JSON UI modal.
+   Found in D:\project\minecraft-bedrock\bedrock-samples\resource_pack:
+     textures/ui/dialog_background_opaque.png (16x16, slice 4): 1px outer #000000, 2px top and left #ffffff,
+       face #c6c6c6, 2px bottom and right #555555.
+   SkyGear oui-mc.css .mc-screen: overlay rgba(0, 0, 0, 0.5) sized 100vw x 100vh, window max 96vw x 96vh.
+   Estimates (not in those files): 1 gui px = 0.2rem, title color #404040, content padding 2 gui px,
+   title 1.4rem, action gap 0.8rem. The frame is drawn with a 0.4rem border plus a 0.2rem black box-shadow. */
+.jui-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 100;
+}
+
+.jui-modal-window {
+  position: relative;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  min-width: 28rem;
+  max-width: 96vw;
+  max-height: 96vh;
+  padding: 0.8rem 1.2rem 1.2rem 1.2rem;
+  border-style: solid;
+  border-width: 0.4rem;
+  border-top-color: #ffffff;
+  border-left-color: #ffffff;
+  border-bottom-color: #555555;
+  border-right-color: #555555;
+  background-color: #c6c6c6;
+  box-shadow: 0 0 0 0.2rem #000000;
+  color: #404040;
+  font-family: var(--oui-font, sans-serif);
+  font-size: 1.4rem;
+}
+
+.jui-modal-title {
+  margin-bottom: 0.8rem;
+  text-align: center;
+  font-size: 1.4rem;
+}
+
+.jui-modal-content {
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+
+.jui-modal-actions {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  margin-top: 1.2rem;
+}
+
+.jui-modal-actions > * {
+  margin-left: 0.8rem;
+}

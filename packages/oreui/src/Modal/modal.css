@@ -1,0 +1,57 @@
+/* Vanilla Ore UI modal. Window colors reuse the measured button theme from hbui/index-aa96eedc6c94fe36a35b.css:
+   face #d0d1d4, border #000000, bevel top #e6e8eb, bottom shadow #58585a, text #1e1e1f.
+   Estimates (the bundle has no modal rule): overlay rgba(0, 0, 0, 0.5), window min width 28rem, max 96vw x 96vh,
+   padding 1.6rem, title 1.8rem, action gap 0.8rem. */
+.oui-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 100;
+}
+
+.oui-modal-window {
+  position: relative;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  min-width: 28rem;
+  max-width: 96vw;
+  max-height: 96vh;
+  padding: 1.6rem;
+  border-style: solid;
+  border-width: 0.2rem;
+  border-color: #000000;
+  border-top-color: #e6e8eb;
+  background-color: #d0d1d4;
+  box-shadow: 0 0 0 0.2rem #000000, 0 0.4rem 0 0.2rem #58585a;
+  color: #1e1e1f;
+  font-family: var(--oui-font, sans-serif);
+  font-size: 1.4rem;
+}
+
+.oui-modal-title {
+  margin-bottom: 1.2rem;
+  font-size: 1.8rem;
+}
+
+.oui-modal-content {
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+
+.oui-modal-actions {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  margin-top: 1.6rem;
+}
+
+.oui-modal-actions > * {
+  margin-left: 0.8rem;
+}
