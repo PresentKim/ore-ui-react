@@ -1,0 +1,73 @@
+/* Values table for the Ore UI accordion.
+   Found in C:\XboxGames\Minecraft for Windows\Content\data\gui\dist\hbui\index-*.css: no accordion, expandable or
+   collapsible rules exist; the look reuses the dropdown trigger theme.
+   Estimates: heading min height 3.2rem, padding 0 1.2rem, background #1e1e1f, border 0.2rem solid #48494a, hover border
+     #b1b2b5, open border #ffffff, chevron 0.8rem square rotated border, body background #313233 with border
+     0.2rem #48494a and padding 1.2rem, text #ffffff, disabled opacity 0.5, items spaced 0.4rem. */
+.oui-accordion {
+  display: block;
+  font-family: var(--oui-font, sans-serif);
+  color: #ffffff;
+}
+
+.oui-accordion-item {
+  display: block;
+  margin-bottom: 0.4rem;
+}
+
+.oui-accordion-heading {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  box-sizing: border-box;
+  min-height: 3.2rem;
+  padding: 0 1.2rem 0 1.2rem;
+  background-color: #1e1e1f;
+  border-style: solid;
+  border-width: 0.2rem;
+  border-color: #48494a;
+}
+
+.oui-accordion-item:hover .oui-accordion-heading {
+  border-color: #b1b2b5;
+}
+
+.oui-accordion-item.open .oui-accordion-heading {
+  border-color: #ffffff;
+}
+
+.oui-accordion-title {
+  flex: 1 1 auto;
+}
+
+.oui-accordion-chevron {
+  flex: 0 0 auto;
+  box-sizing: border-box;
+  width: 0.8rem;
+  height: 0.8rem;
+  margin-left: 1.2rem;
+  margin-bottom: 0.4rem;
+  border-style: solid;
+  border-width: 0 0.2rem 0.2rem 0;
+  border-color: #ffffff;
+  transform: rotate(45deg);
+}
+
+.oui-accordion-item.open .oui-accordion-chevron {
+  margin-bottom: 0;
+  margin-top: 0.4rem;
+  transform: rotate(-135deg);
+}
+
+.oui-accordion-body {
+  box-sizing: border-box;
+  padding: 1.2rem 1.2rem 1.2rem 1.2rem;
+  background-color: #313233;
+  border-style: solid;
+  border-width: 0 0.2rem 0.2rem 0.2rem;
+  border-color: #48494a;
+}
+
+.oui-accordion-item.disabled {
+  opacity: 0.5;
+}
