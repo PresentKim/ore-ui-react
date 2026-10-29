@@ -1,0 +1,11 @@
+/* Floating boxes (tooltips, menus, modals, toasts) render here, a body child the size of the screen, so a
+   scroll box or a panel with overflow hidden does not clip them and their left/top are screen pixels.
+   Pointer events pass through the layer; each floating box that takes presses sets pointer-events: auto. */
+#ou-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+}

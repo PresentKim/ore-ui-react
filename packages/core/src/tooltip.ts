@@ -1,4 +1,4 @@
-import { useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import { useFacetEffect, useFacetMap, useFacetState, useFacetWrap } from '@react-facet/core'
 import type { Facet } from '@react-facet/core'
 import type { ReactNode } from 'react'
@@ -17,9 +17,11 @@ export type TooltipProps = {
   open?: FacetProp<boolean>
 }
 
+export const SCREEN_GAP = 6
+
 const OPPOSITE: Record<TooltipSide, TooltipSide> = { top: 'bottom', bottom: 'top', left: 'right', right: 'left' }
 
-const clamp = (value: number, max: number) => Math.max(0, Math.min(value, max))
+export const clampInto = (value: number, min: number, max: number) => Math.max(min, Math.min(value, max))
 
 const anchor = (target: Rect, tip: Size, side: TooltipSide) => {
   const centerX = target.x + target.w / 2 - tip.w / 2
@@ -30,19 +32,23 @@ const anchor = (target: Rect, tip: Size, side: TooltipSide) => {
   return { x: centerX, y: target.y - tip.h }
 }
 
-const overflows = (point: { x: number; y: number }, tip: Size, view: Size, side: TooltipSide) => {
-  if (side === 'right') return point.x + tip.w > view.w
-  if (side === 'left') return point.x < 0
-  if (side === 'bottom') return point.y + tip.h > view.h
-  return point.y < 0
+const overflows = (point: { x: number; y: number }, tip: Size, view: Size, side: TooltipSide, gap: number) => {
+  if (side === 'right') return point.x + tip.w > view.w - gap
+  if (side === 'left') return point.x < gap
+  if (side === 'bottom') return point.y + tip.h > view.h - gap
+  return point.y < gap
 }
 
-export const placeTooltip = (target: Rect, tip: Size, view: Size, side: TooltipSide): Placement => {
+export const placeTooltip = (target: Rect, tip: Size, view: Size, side: TooltipSide, gap = 0): Placement => {
   const wanted = anchor(target, tip, side)
-  const flipped = overflows(wanted, tip, view, side)
+  const flipped = overflows(wanted, tip, view, side, gap)
   const finalSide = flipped ? OPPOSITE[side] : side
   const point = flipped ? anchor(target, tip, finalSide) : wanted
-  return { x: clamp(point.x, view.w - tip.w), y: clamp(point.y, view.h - tip.h), side: finalSide }
+  return {
+    x: clampInto(point.x, gap, view.w - gap - tip.w),
+    y: clampInto(point.y, gap, view.h - gap - tip.h),
+    side: finalSide,
+  }
 }
 
 export type TooltipBinding = {
@@ -54,6 +60,7 @@ export type TooltipBinding = {
   side: Facet<TooltipSide>
   onMouseEnter: () => void
   onMouseLeave: () => void
+  onTouchStart: () => void
 }
 
 export const useTooltip = (preferred: TooltipSide, open?: FacetProp<boolean>): TooltipBinding => {
@@ -70,11 +77,22 @@ export const useTooltip = (preferred: TooltipSide, open?: FacetProp<boolean>): T
   const top = useFacetMap((place) => `${place.y}px`, [], [placement])
   const side = useFacetMap((place) => place.side, [], [placement])
 
+  useEffect(() => {
+    const onOutsideTouch = (event: TouchEvent) => {
+      const root = rootRef.current
+      if (root && event.target instanceof Node && root.contains(event.target)) return
+      setHover(false)
+    }
+    document.addEventListener('touchstart', onOutsideTouch)
+    return () => document.removeEventListener('touchstart', onOutsideTouch)
+  }, [setHover])
+
   useFacetEffect(
     (isVisible) => {
       const root = rootRef.current
       const tip = tipRef.current
       if (!isVisible || !root || !tip) return
+      setPlacement({ x: 0, y: 0, side: preferred })
       const target = root.getBoundingClientRect()
       const size = tip.getBoundingClientRect()
       setPlacement(
@@ -83,6 +101,7 @@ export const useTooltip = (preferred: TooltipSide, open?: FacetProp<boolean>): T
           { w: size.width, h: size.height },
           { w: window.innerWidth, h: window.innerHeight },
           preferred,
+          SCREEN_GAP,
         ),
       )
     },
@@ -99,5 +118,6 @@ export const useTooltip = (preferred: TooltipSide, open?: FacetProp<boolean>): T
     side,
     onMouseEnter: () => setHover(true),
     onMouseLeave: () => setHover(false),
+    onTouchStart: () => setHover(true),
   }
 }

@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react'
 import { useFacetEffect, useFacetWrap } from '@react-facet/core'
 import type { FacetProp } from './props'
+import { isPrimaryPress } from './pointer'
 
 export type ModalProps = {
   open: FacetProp<boolean>
@@ -27,7 +28,7 @@ export const useModalDismiss = (open: FacetProp<boolean>, onClose?: () => void) 
   )
 
   const onOverlayPress = (event: MouseEvent) => {
-    if (event.button !== 0 || event.target !== event.currentTarget) return
+    if (!isPrimaryPress(event) || event.target !== event.currentTarget) return
     onClose?.()
   }
 
