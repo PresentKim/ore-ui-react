@@ -17,7 +17,12 @@ body {
   padding: 1rem;
   background: #2a2a2b;
   border-right: 1px solid #3a3a3c;
+  position: sticky;
+  top: 0;
+  box-sizing: border-box;
+  height: 100vh;
   overflow-y: auto;
+  overscroll-behavior: contain;
 }
 
 .docs-home {
@@ -109,8 +114,9 @@ pre {
   }
 
   .docs-sidebar {
-    box-sizing: border-box;
+    position: static;
     width: 100%;
+    height: auto;
     max-height: 40vh;
     border-right: 0;
     border-bottom: 1px solid #3a3a3c;
