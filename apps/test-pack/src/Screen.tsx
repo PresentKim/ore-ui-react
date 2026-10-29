@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Scroll as OreScroll } from '@ore-ui-react/oreui'
 import { Scroll as JsonScroll } from '@ore-ui-react/jsonui'
 import { SizedBox } from '@ore-ui-react/primitives'
@@ -36,45 +36,47 @@ export const TestScreen = () => {
   const entry = READY.find((e) => e.id === selected) ?? READY[0]
   const demo = DEMOS[entry.id]
 
+  useEffect(() => {
+    document.body.classList.toggle('tp-active', shown)
+  }, [shown])
+
   return (
-    <div className="tp-root">
+    <>
       {shown && (
-        <div className="tp-overlay">
-          <SizedBox className="tp-window" fixed>
-            <div className="tp-sidebar">
-              <div className="tp-title">ore-ui-react</div>
-              <OreScroll>
-                {CATALOG.map((category) => (
-                  <div key={category.id} className="tp-category">
-                    <div className="tp-category-title">{category.title}</div>
-                    {category.entries
-                      .filter((e) => e.id in DEMOS)
-                      .map((e) => (
-                        <EntryLink key={e.id} entry={e} active={e.id === entry.id} onSelect={setSelected} />
-                      ))}
-                  </div>
-                ))}
-              </OreScroll>
-            </div>
-            <div className="tp-main">
-              <div className="tp-heading">{entry.name}</div>
-              <div className="tp-panels">
-                <div className="tp-panel">
-                  <div className="tp-panel-title">Ore UI</div>
-                  <OreScroll key={`ore-${entry.id}`}>
-                    <div className="tp-stage">{demo.oreui()}</div>
-                  </OreScroll>
+        <SizedBox className="tp-window" fixed>
+          <div className="tp-sidebar">
+            <div className="tp-title">ore-ui-react</div>
+            <OreScroll>
+              {CATALOG.map((category) => (
+                <div key={category.id} className="tp-category">
+                  <div className="tp-category-title">{category.title}</div>
+                  {category.entries
+                    .filter((e) => e.id in DEMOS)
+                    .map((e) => (
+                      <EntryLink key={e.id} entry={e} active={e.id === entry.id} onSelect={setSelected} />
+                    ))}
                 </div>
-                <div className="tp-panel">
-                  <div className="tp-panel-title">JSON UI</div>
-                  <JsonScroll key={`json-${entry.id}`}>
-                    <div className="tp-stage">{demo.jsonui()}</div>
-                  </JsonScroll>
-                </div>
+              ))}
+            </OreScroll>
+          </div>
+          <div className="tp-main">
+            <div className="tp-heading">{entry.name}</div>
+            <div className="tp-panels">
+              <div className="tp-panel">
+                <div className="tp-panel-title">Ore UI</div>
+                <OreScroll key={`ore-${entry.id}`}>
+                  <div className="tp-stage">{demo.oreui()}</div>
+                </OreScroll>
+              </div>
+              <div className="tp-panel">
+                <div className="tp-panel-title">JSON UI</div>
+                <JsonScroll key={`json-${entry.id}`}>
+                  <div className="tp-stage">{demo.jsonui()}</div>
+                </JsonScroll>
               </div>
             </div>
-          </SizedBox>
-        </div>
+          </div>
+        </SizedBox>
       )}
       <div className="tp-badge-row">
         <div
@@ -87,6 +89,6 @@ export const TestScreen = () => {
           {shown ? 'ore-ui-react gallery: press to hide' : 'ore-ui-react gallery: press to show'}
         </div>
       </div>
-    </div>
+    </>
   )
 }

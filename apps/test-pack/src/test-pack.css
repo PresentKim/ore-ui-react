@@ -1,9 +1,8 @@
-.tp-root {
-  font-family: var(--oui-font, sans-serif);
-  color: #e6e6e6;
+body.tp-active #root {
+  visibility: hidden;
 }
 
-.tp-overlay {
+#oui-react-test {
   position: absolute;
   top: 0;
   left: 0;
@@ -13,6 +12,13 @@
   flex-direction: row;
   align-items: center;
   justify-content: center;
+  pointer-events: none;
+  font-family: var(--oui-font, sans-serif);
+  color: #e6e6e6;
+}
+
+#oui-react-test > * {
+  pointer-events: auto;
 }
 
 .tp-window {
