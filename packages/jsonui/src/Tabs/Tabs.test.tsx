@@ -33,6 +33,21 @@ describe('jsonui Tabs', () => {
     expect(view.container.textContent).not.toContain('Panel A')
   })
 
+  it('groups bare TabLinks in one link bar', () => {
+    const active = createFacet({ initialValue: 'a' })
+    const { container } = render(
+      <Tabs active={active}>
+        <TabLink id="a">One</TabLink>
+        <Tab id="a">Panel A</Tab>
+        <TabLink id="b">Two</TabLink>
+      </Tabs>,
+    )
+    const bar = container.querySelector('.jui-tabs-bar') as HTMLElement
+    expect(bar.querySelectorAll('.jui-tablink')).toHaveLength(2)
+    expect(bar.querySelector('.jui-tab')).toBeNull()
+    expect(container.querySelectorAll('.jui-tabs-bar')).toHaveLength(1)
+  })
+
   it('pressing a TabLink calls onChange with its id', () => {
     const { links, onChange } = setup()
     fireEvent.mouseDown(links[1], { button: 0 })

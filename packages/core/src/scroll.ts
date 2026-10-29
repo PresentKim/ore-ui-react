@@ -76,6 +76,9 @@ export const useScroll = (end: boolean, minThumb = MIN_THUMB): ScrollBinding => 
       update()
     }
     const onWheel = (event: WheelEvent) => {
+      const max = content.scrollHeight - content.clientHeight
+      const atEdge = event.deltaY < 0 ? content.scrollTop <= 0 : content.scrollTop >= max
+      if (max <= 0 || atEdge) return
       content.scrollTop += event.deltaY
       event.preventDefault()
       onScroll()

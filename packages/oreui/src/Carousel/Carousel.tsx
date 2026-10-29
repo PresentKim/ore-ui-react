@@ -6,7 +6,8 @@ import './carousel.css'
 
 type PageFacet = ReturnType<typeof useFacetWrap<number>>
 
-export const Carousel = ({ children, page, itemsPerPage = 1, loop = false, onChange }: CarouselProps) => {
+export const Carousel = ({ children, page, itemsPerPage: requestedPerPage = 1, loop = false, onChange }: CarouselProps) => {
+  const itemsPerPage = Math.max(1, requestedPerPage)
   const pageFacet = useFacetWrap(page ?? 1)
   const items = Children.toArray(children)
   const pageCount = carouselPageCount(items.length, itemsPerPage)

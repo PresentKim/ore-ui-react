@@ -1,13 +1,25 @@
-import { Mount, useFacetMap, useFacetWrap } from '@react-facet/core'
+import { Children, isValidElement } from 'react'
+import type { ReactNode } from 'react'
+import { Mount,useFacetMap, useFacetWrap } from '@react-facet/core'
 import { TabsContext, useTabLink, useTabPanel, useTabsValue } from '@ore-ui-react/core/src/tabs'
 import type { TabLinkProps, TabProps, TabsProps } from '@ore-ui-react/core/src/tabs'
 import './tabs.css'
 
-export const Tabs = ({ active, onChange, children }: TabsProps) => (
-  <TabsContext.Provider value={useTabsValue(active, onChange)}>
-    <fast-div className="jui-tabs">{children}</fast-div>
-  </TabsContext.Provider>
-)
+const isTabLink = (child: ReactNode) => isValidElement(child) && child.type === TabLink
+
+export const Tabs = ({ active, onChange, children }: TabsProps) => {
+  const all = Children.toArray(children)
+  const links = all.filter(isTabLink)
+  const rest = all.filter((child) => !isTabLink(child))
+  return (
+    <TabsContext.Provider value={useTabsValue(active, onChange)}>
+      <fast-div className="jui-tabs">
+        {links.length > 0 && <fast-div className="jui-tabs-bar">{links}</fast-div>}
+        {rest}
+      </fast-div>
+    </TabsContext.Provider>
+  )
+}
 
 export const TabLink = ({ id, children, disabled }: TabLinkProps) => {
   const { isActive, onMouseDown } = useTabLink({ id, disabled })

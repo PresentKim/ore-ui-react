@@ -25,6 +25,12 @@ const setup = (props: { page?: number; items?: number; itemsPerPage?: number; lo
 }
 
 describe('oreui Carousel', () => {
+  it('clamps itemsPerPage to at least 1', () => {
+    const { slides, dots } = setup({ itemsPerPage: 0 })
+    expect(slides[0].style.flexBasis).toBe('100%')
+    expect(dots).toHaveLength(4)
+  })
+
   it('next and prev move by one page', () => {
     const { prev, next, onChange } = setup({ page: 2 })
     fireEvent.mouseDown(next, { button: 0 })

@@ -55,6 +55,12 @@ const setup = (end = false) => {
   return { view, content, bar, handle }
 }
 
+const wheelPrevented = (target: HTMLElement, deltaY: number) => {
+  const event = new WheelEvent('wheel', { deltaY, cancelable: true, bubbles: true })
+  fireEvent(target, event)
+  return event.defaultPrevented
+}
+
 describe('jsonui Scroll', () => {
   it('shows the bar when content overflows', () => {
     const { bar, handle } = setup()
@@ -71,6 +77,20 @@ describe('jsonui Scroll', () => {
     const { content } = setup()
     fireEvent.wheel(content, { deltaY: 90 })
     expect(content.scrollTop).toBe(90)
+  })
+
+  it('wheel is not prevented without overflow', () => {
+    sizes.full = 100
+    const { content } = setup()
+    expect(wheelPrevented(content, 90)).toBe(false)
+  })
+
+  it('wheel is not prevented at the edge in its direction', () => {
+    const { content } = setup()
+    expect(wheelPrevented(content, -90)).toBe(false)
+    expect(wheelPrevented(content, 300)).toBe(true)
+    expect(wheelPrevented(content, 90)).toBe(false)
+    expect(wheelPrevented(content, -90)).toBe(true)
   })
 
   it('drag_thumb scrolls proportionally', () => {
