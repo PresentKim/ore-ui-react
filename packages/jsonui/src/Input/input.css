@@ -8,7 +8,8 @@
        step buttons).
    Estimates (not in those files): 1 gui px = 0.2rem, box min height 20 gui px, box background #000000 with a 0.2rem
      inset border (top and left #373737, bottom and right #ffffff), field padding
-     0 0.6rem, font size 1.4rem, step button face #c6c6c6 with label #4d4d4d, password toggle 2.4rem wide,
+     0.8rem 0.6rem with line height 2rem to fill the 3.6rem inner height (Gameface draws input text at the top of the
+     box; the flex values are longhands as in the vanilla hbui text field), font size 1.4rem, step button face #c6c6c6 with label #4d4d4d, password toggle 2.4rem wide,
      disabled opacity 0.5. */
 .jui-input {
   display: flex;
@@ -35,10 +36,13 @@
 }
 
 .jui-input-field {
-  flex: 1 1 0;
+  flex-grow: 1;
+  flex-shrink: 1;
+  flex-basis: 0;
   box-sizing: border-box;
   min-width: 8rem;
-  padding: 0 0.6rem 0 0.6rem;
+  padding: 0.8rem 0.6rem 0.8rem 0.6rem;
+  line-height: 2rem;
   background-color: transparent;
   border-style: none;
   color: #ffffff;

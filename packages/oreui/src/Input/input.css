@@ -3,10 +3,12 @@
      field is a transparent borderless native input, flex 1 1 0, min height and paddings from the baseTextField* custom
      properties, border image per state (default, hovered, focused, disabled), disabled color baseTextFieldDisabledColor,
      placeholder color baseTextFieldPlaceholderColor, step button row height 4.8rem with a 0.4rem top highlight.
+     The field sets flex-grow, flex-shrink and flex-basis as longhands and places the text with padding-top and
+     line-height (baseTextFieldPaddingTop, baseTextFieldLineHeight); Gameface draws input text at the top of the box.
    Estimates (the baseTextField* values are theme tokens outside the stylesheet; colors borrowed from the vanilla switch
    theme in ore-ui-loading/samples/oui-react/src/switch.css):
      root min height 4.8rem, background #1e1e1f, border 0.2rem solid #48494a, hover border #b1b2b5, focus border #ffffff,
-     field padding 0 1.2rem, text #ffffff, placeholder #8c8d90, font size 1.4rem, step buttons 4.8rem wide with
+     field padding 1.2rem with line height 2rem to fill the 4.4rem inner height, text #ffffff, placeholder #8c8d90, font size 1.4rem, step buttons 4.8rem wide with
      #313233 background and a white 1.2rem plus or minus glyph, password toggle 2.4rem wide with a ring glyph,
      disabled opacity 0.5. */
 .oui-input {
@@ -32,10 +34,13 @@
 }
 
 .oui-input-field {
-  flex: 1 1 0;
+  flex-grow: 1;
+  flex-shrink: 1;
+  flex-basis: 0;
   box-sizing: border-box;
   min-width: 8rem;
-  padding: 0 1.2rem 0 1.2rem;
+  padding: 1.2rem 1.2rem 1.2rem 1.2rem;
+  line-height: 2rem;
   background-color: transparent;
   border-style: none;
   color: #ffffff;
